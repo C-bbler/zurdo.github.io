@@ -97,7 +97,7 @@
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg">
 <meta property="og:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
-<meta property="og:updated_time" content="2019-05-19T12:09:24.245Z">
+<meta property="og:updated_time" content="2019-05-19T12:30:08.306Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构的单链表">
 <meta name="twitter:description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  数据结构的概述在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
@@ -374,19 +374,24 @@
 <li>线性结构</li>
 </ol>
 <p>数据结构中的元素存在一对一的相互关系；</p>
-<p>3.树形结构</p>
+<ol start="3">
+<li>树形结构</li>
+</ol>
 <p>数据结构中的元素存在一对多的相互关系；</p>
-<p>4.图形结构</p>
+<ol start="4">
+<li>图形结构</li>
+</ol>
 <p>数据结构中的元素存在多对多的相互关系。</p>
-<p>###存储结构（物理结构）</p>
-<p>1.顺序结构</p>
-<p>   对于顺序结构来说，元素在存储器中的相对位置连续且所有元素都存放在这一片内存范围中。常常使用数组来表示。</p>
-<p>2.链式结构</p>
+<h3 id="存储结构（物理结构）"><a href="#存储结构（物理结构）" class="headerlink" title="存储结构（物理结构）"></a>存储结构（物理结构）</h3><ol>
+<li><p>顺序结构</p>
+<p>对于顺序结构来说，元素在存储器中的相对位置连续且所有元素都存放在这一片内存范围中。常常使用数组来表示。</p>
+</li>
+<li><p>链式结构</p>
+</li>
+</ol>
 <p>对于链式存储来讲，我们把每一个数据项都称作一个节点，每个节点又由两个或者三个域组成（例如单链表由NEXT指针与和数据域两部分构成，而双向链表由prior，next，data域三部分构成）。针对存储结构来说，链式结构的存储地址不一定在连续的范围，因为内存实时分配，内存的地址可能就会分配给其他的程序啦存储数据。但是这样做的好处是不必关心内存初始化的时候是否分配有足够的空间，在实际的运行使用中，处理器会根据数据的大小而动态分配相应大小的内存。</p>
-<p>###顺序表</p>
-<p>顺序表属于一般线性表的一种简单实现，数据的存储地址连续。受限于初始化的内存大小。</p>
-<p>###单链表</p>
-<p>单链表就是一种最简单的链式结构。我们可以进行简单的增删改查操作。在Linklist.c文件中就行函数结构的书写，linklist.h头文件中对函数原型进行声明，在test.c文件书写主函数通过调用子函数，来实现相应的功能！</p>
+<h3 id="顺序表"><a href="#顺序表" class="headerlink" title="顺序表"></a>顺序表</h3><p>顺序表属于一般线性表的一种简单实现，数据的存储地址连续。受限于初始化的内存大小。</p>
+<h3 id="单链表"><a href="#单链表" class="headerlink" title="单链表"></a>单链表</h3><p>单链表就是一种最简单的链式结构。我们可以进行简单的增删改查操作。在Linklist.c文件中就行函数结构的书写，linklist.h头文件中对函数原型进行声明，在test.c文件书写主函数通过调用子函数，来实现相应的功能！</p>
 <p>为什么要将函数实现和声明分开写？因为在一个大的工程中我们不可能将所有的文件都写入一个.c文件中，否则Debug的时候就会非常的难找到所有错误，降低工作效率。</p>
 <hr>
 <p>文件代码部分：</p>
@@ -530,7 +535,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -543,7 +548,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">1</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
@@ -578,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构的概述"><span class="nav-number">1.</span> <span class="nav-text">数据结构的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑结构"><span class="nav-number">1.1.</span> <span class="nav-text">逻辑结构</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构的概述"><span class="nav-number">1.</span> <span class="nav-text">数据结构的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑结构"><span class="nav-number">1.1.</span> <span class="nav-text">逻辑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储结构（物理结构）"><span class="nav-number">1.2.</span> <span class="nav-text">存储结构（物理结构）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺序表"><span class="nav-number">1.3.</span> <span class="nav-text">顺序表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单链表"><span class="nav-number">1.4.</span> <span class="nav-text">单链表</span></a></li></ol></li></ol></div>
             
 
           </div>
