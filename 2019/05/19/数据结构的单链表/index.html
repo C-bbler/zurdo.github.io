@@ -87,21 +87,21 @@
 
 
 
-<meta name="description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  ##数据结构的概述 在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
+<meta name="description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  数据结构的概述在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
 <meta name="keywords" content="数据结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构的单链表">
 <meta property="og:url" content="http://yoursite.com/2019/05/19/数据结构的单链表/index.html">
 <meta property="og:site_name" content="Zurdo">
-<meta property="og:description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  ##数据结构的概述 在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
+<meta property="og:description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  数据结构的概述在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg">
-<meta property="og:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
-<meta property="og:updated_time" content="2019-05-19T09:23:47.312Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png">
+<meta property="og:updated_time" content="2019-05-19T12:09:24.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构的单链表">
-<meta name="twitter:description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  ##数据结构的概述 在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg">
+<meta name="twitter:description" content="恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。  数据结构的概述在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/19/数据结构的单链表/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg">
 
 
 
@@ -207,7 +207,7 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
@@ -217,7 +217,7 @@
       
         
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
@@ -361,15 +361,18 @@
         <hr>
 <p>恰好最近在复习数据结构，又发现了之前学习中的很多漏洞，写几篇来总结一下吧，顺便检验一下自己的学习成果。</p>
 <hr>
-<p>##数据结构的概述</p>
-<p>在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。</p>
+<h2 id="数据结构的概述"><a href="#数据结构的概述" class="headerlink" title="数据结构的概述"></a>数据结构的概述</h2><p>在学习C语言基础的时候，我们就见到过这样一句话：程序=算法＋数据结构。在我第一次学习的时候一点都不清楚数据结构的涵义，直到现在才有一些简单的理解。</p>
 <a id="more"></a>
+
 <p>在C语言基础课程的学习中，我们操作的仅仅是变量，单一的变量并没有什么意义，但是在数据结构中，研究的是数据与数据之前关系，包括逻辑结构、物理结构以及数据项之间的运算。</p>
-<p>###逻辑结构</p>
-<p><img src="/2019/05/19/数据结构的单链表/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg" alt="图片"></p>
-<p>1.集合</p>
+<h3 id="逻辑结构"><a href="#逻辑结构" class="headerlink" title="逻辑结构"></a>逻辑结构</h3><p><img src="/2019/05/19/数据结构的单链表/%E7%BB%93%E6%9E%84%E5%9B%BE.jpg" alt="图片"></p>
+<ol>
+<li>集合</li>
+</ol>
 <p>数据结构中的元素之间除了“同属一个集合” 的相互关系外，别无其他关系；</p>
-<p>2.线性结构</p>
+<ol start="2">
+<li>线性结构</li>
+</ol>
 <p>数据结构中的元素存在一对一的相互关系；</p>
 <p>3.树形结构</p>
 <p>数据结构中的元素存在一对多的相互关系；</p>
@@ -403,7 +406,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS=gcc -c -Wall -g</span><br><span class="line">test:linklist.o test.o</span><br><span class="line"></span><br><span class="line">.PHONY:clean</span><br><span class="line">clean:</span><br><span class="line">      rm *.o test</span><br></pre></td></tr></table></figure>
 
 <p>编写完成后退出vi编辑器，执行一遍mark，再看看你的当前目录下是不是已经生成了一个可执行文件。</p>
-<p>此时我们执行<br>``./test<br>就可以看到我们的想要的结果了！<br><img src="/2019/05/19/数据结构的单链表/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%9A%84%E5%8D%95%E9%93%BE%E8%A1%A8%E5%AE%9E%E7%8E%B0/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="图片"></p>
+<p>此时我们执行</p>
+<p><code>./test</code></p>
+<p>就可以看到我们的想要的结果了！</p>
+<p><img src="/2019/05/19/数据结构的单链表/%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C.png" alt="图片"></p>
 
       
     </div>
@@ -501,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Zurdo">
           <p class="site-author-name" itemprop="name">Zurdo</p>
@@ -514,8 +529,8 @@
 
           
             <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">2</span>
+              <a href="/archives/">
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -527,10 +542,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">1</span>
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">tags</span>
-              
+              </a>
             </div>
           
 
@@ -553,6 +568,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构的概述"><span class="nav-number">1.</span> <span class="nav-text">数据结构的概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑结构"><span class="nav-number">1.1.</span> <span class="nav-text">逻辑结构</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
