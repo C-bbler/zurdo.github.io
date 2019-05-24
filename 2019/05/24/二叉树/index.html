@@ -1,0 +1,912 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh_CH">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="数据结构,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="树已经和之前的栈，队列的结构已经发生了改变，它是一种非线性结构。和图，集合属于同一类。">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树">
+<meta property="og:url" content="http://yoursite.com/2019/05/24/二叉树/index.html">
+<meta property="og:site_name" content="Zurdo">
+<meta property="og:description" content="树已经和之前的栈，队列的结构已经发生了改变，它是一种非线性结构。和图，集合属于同一类。">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="http://yoursite.com/2019/05/24/二叉树/%E5%9B%BE2.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/24/二叉树/%E5%85%88%E5%BA%8F%E9%80%92%E5%BD%92%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/24/二叉树/%E5%9B%BE2.png">
+<meta property="og:updated_time" content="2019-05-24T11:39:02.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉树">
+<meta name="twitter:description" content="树已经和之前的栈，队列的结构已经发生了改变，它是一种非线性结构。和图，集合属于同一类。">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/24/二叉树/%E5%9B%BE2.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/24/二叉树/">
+
+
+
+
+
+  <title> 二叉树 | Zurdo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh_CH">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zurdo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/24/二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zurdo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zurdo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                二叉树
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-24T17:46:15+08:00">
+                2019-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>树已经和之前的栈，队列的结构已经发生了改变，它是一种非线性结构。和图，集合属于同一类。</p>
+<a id="more"></a>
+
+<h3 id="基础术语"><a href="#基础术语" class="headerlink" title="基础术语"></a>基础术语</h3><p><img src="/2019/05/24/二叉树/%E5%9B%BE2.png" alt="图片"></p>
+<ol>
+<li>结点：树的每一个独立单元。图中的A,B,C,D等都是一个节点。</li>
+<li>结点的度：结点拥有的子树。图中A结点的度为2。</li>
+<li>树的度：结点拥有的子树的最大值。图中结点的度为2。</li>
+<li>叶子：度为0的结点。H,G,F。</li>
+<li>兄弟：有同一个父结点。</li>
+<li>祖先：从根节点到该结点经过的所有结点。</li>
+<li>子孙：以某个结点为根节点，其下所有的结点都成为它的子孙。</li>
+<li>层次：根结点称为第一层，依次向下递增。</li>
+<li>树的深度：树拥有的最大层数。</li>
+<li>有序树和无序树：将树中的各个子树看作从左到右是有顺序的，不可交换就成为有序树。有序树的左子节点称为第一个孩子，右子节点称为最后一个孩子。</li>
+<li>森林：树与树之间没有任何联系，但是增加一个根节点就能变成一棵树。同样，对于树中（除根结点外）的每一个子树之间都是森林。</li>
+</ol>
+<hr>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><h4 id="定义，特点"><a href="#定义，特点" class="headerlink" title="定义，特点"></a>定义，特点</h4><p>二叉树是n个结点构成的集合。<br>对于非空二叉树而言：</p>
+<ol>
+<li>有且仅有一个根结点。</li>
+<li>每一个结点最多只有两个子树。</li>
+<li>二叉树是有序树，左右节点不能互换。</li>
+</ol>
+<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><ol>
+<li>在二叉树的第i层上最多有2^(i-1)个结点(i&gt;=1)。</li>
+<li>深度为k的二叉树最多有2^k-1个结点(k&gt;=1)。</li>
+<li>对于任意一颗二叉树，度为2的结点树始终比度为0的少一，即n0=n2+1。</li>
+</ol>
+<h4 id="特殊的二叉树"><a href="#特殊的二叉树" class="headerlink" title="特殊的二叉树"></a>特殊的二叉树</h4><p>满二叉树：深度为k且含有2^k-1个结点的二叉树。<br>特点：每一层的结点数都是最大值。</p>
+<p>完全二叉树：存在度为1或者为0的结点。<br>特点：叶子结点只可能出现在最下方两层，若右子树最大层数为L，则左子树的最大深度一定为L或者L+1。</p>
+<p>满二叉树一定是完全二叉树，但是完全二叉树不一定是满二叉树。</p>
+<hr>
+<h3 id="存储结构"><a href="#存储结构" class="headerlink" title="存储结构"></a>存储结构</h3><ol>
+<li>顺序结构</li>
+</ol>
+<p>顺序存储只适用与完全二叉树（如果一个二叉树只有右子树，那么采用顺序存储会浪费很大的空间存放无效数据）。</p>
+<ol start="2">
+<li>链式结构</li>
+</ol>
+<p>将每一个结点分为数据域和指针域，而指针域又分为左子树指针和右子树指针。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct node</span><br><span class="line">&#123;</span><br><span class="line">	datatype data;</span><br><span class="line">	struct node *lchild,*rchild;</span><br><span class="line">&#125;btree_node,*btree_pnode;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><h4 id="创建二叉树"><a href="#创建二叉树" class="headerlink" title="创建二叉树"></a>创建二叉树</h4><p>二叉树的相关创建和遍历使用递归就很很容的实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">void create_btree(btree_pnode *p)//利用二级指针创建</span><br><span class="line">&#123;</span><br><span class="line">	data_type ch;</span><br><span class="line">//	printf(&quot;please input letter:&quot;);加上这一句会无限打印</span><br><span class="line">	scanf(&quot;%c&quot;,&amp;ch);</span><br><span class="line">	if(ch == &apos;#&apos;)//#代表空</span><br><span class="line">		*p = NULL;</span><br><span class="line">	else&#123;</span><br><span class="line">	    *p = (btree_pnode)malloc(sizeof(btree_node));//创建根节点</span><br><span class="line">		if((*p)==NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			puts(&quot;malloc false!&quot;);</span><br><span class="line">			exit(1);</span><br><span class="line">		&#125;</span><br><span class="line">		(*p)-&gt;data = ch;</span><br><span class="line">		create_btree(&amp;(*p)-&gt;lchild);//递归创建左子树</span><br><span class="line">		create_btree(&amp;(*p)-&gt;rchild);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果不用二级指针的话，我们也可以用结构体变量来作为返回值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">btree_pnode create_btree()</span><br><span class="line">&#123;</span><br><span class="line">	btree_pnode p;</span><br><span class="line">	datatype ch;</span><br><span class="line">	printf(&quot;please input letter:&quot;);</span><br><span class="line">	scanf(&quot;%c&quot;,&amp;ch);</span><br><span class="line">	if(ch == &apos;#&apos;)//#代表空</span><br><span class="line">		return NULL;</span><br><span class="line">	else((p = (btree_pnode)malloc(sizeof(btree_node))))//创建根节点</span><br><span class="line">	&#123;</span><br><span class="line">		puts(&quot;malloc false!&quot;);</span><br><span class="line">		return NULL;//exit(1);</span><br><span class="line">	&#125;</span><br><span class="line">	p-&gt;data = ch;</span><br><span class="line">	p-&gt;lchild = create_btree();</span><br><span class="line">	p-&gt;rchild = create_btree();</span><br><span class="line">	return p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="先序遍历"><a href="#先序遍历" class="headerlink" title="先序遍历"></a>先序遍历</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void pre_order(btree_pnode t)</span><br><span class="line">&#123;</span><br><span class="line">	if(t != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%c &quot;,t-&gt;data);//根节点</span><br><span class="line">		pre_order(t-&gt;lchild);//递归遍历左子树</span><br><span class="line">		pre_order(t-&gt;rchild);//递归遍历右子树</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/05/24/二叉树/%E5%85%88%E5%BA%8F%E9%80%92%E5%BD%92%E8%BF%87%E7%A8%8B.png" alt="图片"></p>
+<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void pre_order(btree_pnode t)</span><br><span class="line">&#123;</span><br><span class="line">	if(t != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line">		pre_order(t-&gt;lchild);//递归遍历左子树</span><br><span class="line">		printf(&quot;%c &quot;,t-&gt;data);//根节点</span><br><span class="line">		pre_order(t-&gt;rchild);//递归遍历右子树</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">void pre_order(btree_pnode t)</span><br><span class="line">&#123;</span><br><span class="line">	if(t != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		pre_order(t-&gt;lchild);//递归遍历左子树</span><br><span class="line">		pre_order(t-&gt;rchild);//递归遍历右子树</span><br><span class="line">		printf(&quot;%c &quot;,t-&gt;data);//根节点</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="层次遍历"><a href="#层次遍历" class="headerlink" title="层次遍历"></a>层次遍历</h4><p>层次遍历是利用了队列的先进先出原则，首先读取根结点之后，判断左子树是否为空，如果不为空将其入队。再判断右子树是否为空，如果不为空，将其入队。这样队列中就存在了下一层的左右子树的结点，在该层判断完成后，将队列中的元素进行出队操作，故出队的第一个元素就是根节点的左子树，符合层次遍历的规则。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void level_order(btree_pnode t)	</span><br><span class="line">&#123;</span><br><span class="line">	link_pqueue q;</span><br><span class="line">	init_linkqueue(&amp;q);//初始化队列</span><br><span class="line">	while(t != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		//访问t指向的队列</span><br><span class="line">		printf(&quot;%c &quot;,t-&gt;data);</span><br><span class="line">		//当t的左指针不为空的时候入队</span><br><span class="line">		if(t-&gt;lchild != NULL)</span><br><span class="line">			in_linkqueue(t-&gt;lchild,q);</span><br><span class="line">		//当t的右指针不为空的时候入队</span><br><span class="line">		if(t-&gt;rchild != NULL)</span><br><span class="line">			in_linkqueue(t-&gt;rchild,q);</span><br><span class="line">		//当队列非空的时候出队</span><br><span class="line">		if(!is_empty_linkqueue(q))</span><br><span class="line">			out_linkqueue(q,&amp;t);</span><br><span class="line">		else </span><br><span class="line">			break;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2019/05/24/二叉树/%E5%9B%BE2.png" alt="图片"></p>
+<p>先序：ABCDEFGHK(第一次经过的路线)<br>中序：BDCAEHGKF(左子树-&gt;根节点-&gt;右子树)<br>后序：DCBHKGFEA(左子树-&gt;右子树-&gt;根节点)<br>层次遍历： ABECFDGHK</p>
+<h4 id="非递归实现先序遍历"><a href="#非递归实现先序遍历" class="headerlink" title="非递归实现先序遍历"></a>非递归实现先序遍历</h4><p>在使用递归的时候，我们发现遍历二叉树只要判断其是否为空就行了，但是在我们不使用递归函数的时候，就要对二叉树进行分析操作，以上图为例，在先序遍历的时候首先判断根结点的右子树是否为空，如果不为空，将其入栈（此时栈中元素为E），在将指针指向根结点的左子树（t=t-&gt;lchild），再判断这个根结点的右子树如果非空，将其入栈（栈中数据为EC），由于此时根结点（B）的左子树为空，故将栈中元素出栈，C出栈作为根结点。同理直到栈为空并且末尾根结点的左右子树都不存在时，遍历完成。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void unpre_order(btree_pnode t)</span><br><span class="line">&#123;</span><br><span class="line">	linkstack s;</span><br><span class="line">	</span><br><span class="line">	s=link_stack_create();</span><br><span class="line"></span><br><span class="line">	while(t!=NULL||!link_stack_empty(s))</span><br><span class="line">	&#123;</span><br><span class="line">		if(t!=NULL)//若二叉树不为空,输入</span><br><span class="line">		&#123;</span><br><span class="line">			printf(&quot;%c &quot;,t-&gt;data);</span><br><span class="line">			if(t-&gt;rchild!=NULL)</span><br><span class="line">				link_stack_push(s,t-&gt;rchild);//将右子树入栈</span><br><span class="line">			t = t-&gt;lchild;//移动指针</span><br><span class="line">		&#125;</span><br><span class="line">		else&#123; </span><br><span class="line">			link_stack_pop(s);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行错误"><a href="#运行错误" class="headerlink" title="运行错误"></a>运行错误</h3><p>① passing argument 1 of ‘create_btree’ from incompatible pointer type [enabled by default]<br>从不兼容的指针类型传递’create_btree’的参数1 [默认启用]<br>解决方法：<br>我们在创建二级指针的时候，第一次引用迭代递归创建左右子树的时候，应该是&amp;（<em>t）-&gt;lchild;而不是我们写的(</em>t)-&gt;lchild;<br>首先取指针指向的根节点的地址，这样左子树创建时才能用起始地址。</p>
+<p>②note: expected ‘struct node *<em>’ but argument is of type ‘struct node *’<br>注意：预期’struct node *</em>‘但参数的类型为’struct node *’<br>解决方法：<br>将传入的参数格式写成二级指针的形式。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/22/循环链表/" rel="next" title="循环链表">
+                <i class="fa fa-chevron-left"></i> 循环链表
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Zurdo">
+          <p class="site-author-name" itemprop="name">Zurdo</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础术语"><span class="nav-number">1.</span> <span class="nav-text">基础术语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树"><span class="nav-number">2.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义，特点"><span class="nav-number">2.1.</span> <span class="nav-text">定义，特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性质"><span class="nav-number">2.2.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特殊的二叉树"><span class="nav-number">2.3.</span> <span class="nav-text">特殊的二叉树</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存储结构"><span class="nav-number">3.</span> <span class="nav-text">存储结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现过程"><span class="nav-number">4.</span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建二叉树"><span class="nav-number">4.1.</span> <span class="nav-text">创建二叉树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#先序遍历"><span class="nav-number">4.2.</span> <span class="nav-text">先序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中序遍历"><span class="nav-number">4.3.</span> <span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后序遍历"><span class="nav-number">4.4.</span> <span class="nav-text">后序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#层次遍历"><span class="nav-number">4.5.</span> <span class="nav-text">层次遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非递归实现先序遍历"><span class="nav-number">4.6.</span> <span class="nav-text">非递归实现先序遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行错误"><span class="nav-number">5.</span> <span class="nav-text">运行错误</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zurdo</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
