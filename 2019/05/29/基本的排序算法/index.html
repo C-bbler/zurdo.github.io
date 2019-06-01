@@ -95,10 +95,14 @@
 <meta property="og:site_name" content="Zurdo">
 <meta property="og:description" content="排序算法从稳定性上可以分为稳定排序和非稳定排序。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:updated_time" content="2019-05-29T12:12:39.531Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%872.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%871.png">
+<meta property="og:updated_time" content="2019-06-01T07:34:45.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本的排序算法">
 <meta name="twitter:description" content="排序算法从稳定性上可以分为稳定排序和非稳定排序。">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png">
 
 
 
@@ -380,14 +384,16 @@
 <li>归并排序</li>
 <li>基准排序</li>
 </ol>
-<p>① 直接插入排序<br>例如：存在一个集合Key允许相同的键值存在，K={50，36，66，76，95，12，25，36}<br>首先将K分为两部分，有序部分和无序部分。<br><a href="基本的排序算法/图片0.png">图片</a><br>定义i为指向无序部分第一个元素的下标，j为指向有序部分最后一个元素的下标，临时变量temp。将i中的值保存在temp中，比较temp和j的元素，如果temp的值小于j中的数值，将j前移一位，再此比较元素值。如果j=-1，结束，将temp的数值插入到j的下标的后一个位置。如果temp的数值大于j的值，不移动。进行下一次比较。</p>
+<p>① 直接插入排序<br>例如：存在一个集合Key允许相同的键值存在，K={50，36，66，76，95，12，25，36}<br>首先将K分为两部分，有序部分和无序部分。</p>
+<p><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png" alt="图片"></p>
+<p>定义i为指向无序部分第一个元素的下标，j为指向有序部分最后一个元素的下标，临时变量temp。将i中的值保存在temp中，比较temp和j的元素，如果temp的值小于j中的数值，将j前移一位，再此比较元素值。如果j=-1，结束，将temp的数值插入到j的下标的后一个位置。如果temp的数值大于j的值，不移动。进行下一次比较。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void seqsort(int *a)</span><br><span class="line">&#123;</span><br><span class="line">	int i,j,temp;</span><br><span class="line">	for(i = 1;i &lt; N;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		temp = a[i];</span><br><span class="line"> 		for(j = i-1;j&gt;=0;j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if(temp&lt;a[j])</span><br><span class="line">				a[j+1] = a[j];</span><br><span class="line">			else</span><br><span class="line">				break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>② 希尔排序（缩小增量配置排序）是一种在直接插入排序基础上的改进。<br>操作步骤：</p>
 <ol>
 <li>将待排序的原纪录进行分组。分组的标准是增量（d）。</li>
 <li>再对每一组进行交替直接插入排序。</li>
-<li>逐渐减少增量。增量的初值为记录个数/2<br><a href="基本的排序算法/图片2.png">图片</a><br>具体分析实现：<br>待排序长度为10，所以D初值为5（距离第一个记录间隔为5的称为一组）可以分为5组<br>50和12是一组，在直接插入排序后变为12，50.<br>……<br>待五组比较完成后序列变为12,25,36,24,8,50,36,66,76,95，开始缩小增量d=d/2=2，只能分为两组同一组元素相差两个位置<br><a href="基本的排序算法/图片1.png">图片</a><br>排序后序列为：8,24,12,25,36,50,36,66,76,95再缩小增量d= d/2=1<br>只能分为1组可以直接进行直接插入排序<br>8,12,24,25,36,36,50,66,76,95</li>
+<li>逐渐减少增量。增量的初值为记录个数/2<br><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%872.png" alt="图片"><br>具体分析实现：<br>待排序长度为10，所以D初值为5（距离第一个记录间隔为5的称为一组）可以分为5组<br>50和12是一组，在直接插入排序后变为12，50.<br>……<br>待五组比较完成后序列变为12,25,36,24,8,50,36,66,76,95，开始缩小增量d=d/2=2，只能分为两组同一组元素相差两个位置<br><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%871.png" alt="图片"><br>排序后序列为：8,24,12,25,36,50,36,66,76,95再缩小增量d= d/2=1<br>只能分为1组可以直接进行直接插入排序<br>8,12,24,25,36,36,50,66,76,95</li>
 </ol>
 <p>③ 快速排序<br>定义：经过key的一趟排序后，确定某个记录在排序后的最终位置。（某个记录叫做基准），基准会将一组数据分为小于基准和大于基准的两部分。<br>基准的确定：一般选择记录的第一个元素作为基准。<br>例如：35，42，68，13，21，53   进行排序</p>
 <p>首先将基准放入最终位置</p>
