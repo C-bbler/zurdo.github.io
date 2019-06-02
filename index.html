@@ -356,43 +356,15 @@
 
       
         
-          
-            <hr>
-<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><ol>
-<li>静态库是再链接过程中将库文件中的相关代码复制到源文件中</li>
-<li>不需要加载库所以执行的效率更快</li>
-<li>当静态库更新后，所有使用库文件的源程序都要重新编译。（如果想要使用最新的库文件）</li>
-</ol>
-<h4 id="静态库的创建"><a href="#静态库的创建" class="headerlink" title="静态库的创建"></a>静态库的创建</h4><p>eg：hello.c</p>
-<ol>
-<li>创建文件hello.c  程序书写完成后，进行编译 </li>
-<li><code>gcc -c hello hello.c</code></li>
-<li>将生成的.o文件进行 创建库文件 <code>ar crs libhello.a   hello.o</code>（libhello.a是库名称）<br>静态库名称命名规则：以  lib  开始，以  .a   结束 库名部分需要有实际意义</li>
-<li>链接静态库（在需要调用的地方，声名函数原型，然后直接调用）</li>
-<li>编译 <code>gcc -o test test.c -L. -lhello</code>   (L是指定添加库的搜索路径，-l 是指定的要链接的库的名称， . 是当前路径)</li>
-</ol>
-<h3 id="共享库"><a href="#共享库" class="headerlink" title="共享库"></a>共享库</h3><p>链接时仅记录用到了哪个共享库中哪个符号，不复制共享库中的代码。</p>
-<ol>
-<li>多个程序可以共享一个库</li>
-<li>程序不包括库中代码、尺寸小</li>
-<li>程序运行需要加载库</li>
-<li>共享库升级方便，不需要重新编译程序</li>
-</ol>
-<h4 id="共享库的创建"><a href="#共享库的创建" class="headerlink" title="共享库的创建"></a>共享库的创建</h4><p>eg：hello.c  bye.c </p>
-<ol>
-<li>创建文件hello.c  bye.c程序书写完成后，进行编译 </li>
-<li><code>gcc -c -fPIC  bye.c hello.c</code> (-fPIC是生成位置无关代码，可以在任意地方运行)`</li>
-<li>将生成的.o文件进行 创建库文件 <code>gcc -shared -o libcommon.so.1 hello.o bye.o</code><br>(-shared是指定创建共享库文件)<br>共享库文件的命名规则：以  lib  开始，以  .so   结束 库名部分需要有实际意义 数字是库的版本号</li>
-<li>为共享库创建符号链接文件（符号链接只想真正的共享库文件）<br><code>In -s libcommon.so.1 libcommon.so</code><br>链接文件的命名规则：以lib开始，以  .so结束</li>
-<li>编译 <code>gcc -o test test.c -L. -lcommon</code>（gcc首先默认链接共享库，其次再链接静态库，如果两个都不存在就报错）</li>
-</ol>
-<h4 id="系统找到共享库的三种方式"><a href="#系统找到共享库的三种方式" class="headerlink" title="系统找到共享库的三种方式"></a>系统找到共享库的三种方式</h4><ol>
-<li>拷贝库文件到/usr/lib和/lib目录下（非常不建议）</li>
-<li>再LD_LIBRARY_PATH环境变量中添加库的路径（仅限于在当前的终端中，打开新的终端需要再次添加）</li>
-<li>在/etc/id.so.conf.d/*.conf文件，执行ldconfig刷新（需要在root权限下操作）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/id.so.conf.d/my.conf (my.conf是自己新建的配置文件)</span><br><span class="line"> 输入当前库文件的路径</span><br><span class="line">sudo idconfig</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-          
+          <hr>
+<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/02/库/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
