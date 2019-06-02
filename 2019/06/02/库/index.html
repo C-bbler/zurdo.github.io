@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Linux,">
 
 
 
@@ -87,14 +87,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="静态库 静态库是再链接过程中将库文件中的相关代码复制到源文件中 不需要加载库所以执行的效率更快 当静态库更新后，所有使用库文件的源程序都要重新编译。（如果想要使用最新的库文件）  静态库的创建eg：hello.c  创建文件hello.c  程序书写完成后，进行编译  gcc -c hello hello.c 将生成的.o文件进行 创建库文件 ar crs libhello.a   hello.">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="库">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/库/index.html">
 <meta property="og:site_name" content="Zurdo">
+<meta property="og:description" content="静态库 静态库是再链接过程中将库文件中的相关代码复制到源文件中 不需要加载库所以执行的效率更快 当静态库更新后，所有使用库文件的源程序都要重新编译。（如果想要使用最新的库文件）  静态库的创建eg：hello.c  创建文件hello.c  程序书写完成后，进行编译  gcc -c hello hello.c 将生成的.o文件进行 创建库文件 ar crs libhello.a   hello.">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:updated_time" content="2019-05-19T12:26:06.002Z">
+<meta property="og:updated_time" content="2019-06-02T12:42:02.116Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="库">
+<meta name="twitter:description" content="静态库 静态库是再链接过程中将库文件中的相关代码复制到源文件中 不需要加载库所以执行的效率更快 当静态库更新后，所有使用库文件的源程序都要重新编译。（如果想要使用最新的库文件）  静态库的创建eg：hello.c  创建文件hello.c  程序书写完成后，进行编译  gcc -c hello hello.c 将生成的.o文件进行 创建库文件 ar crs libhello.a   hello.">
 
 
 
@@ -122,19 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/02/库/">
 
 
 
 
 
-  <title>
-  
-
-  
-    tags | Zurdo
-  
-</title>
+  <title> 库 | Zurdo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CH">
@@ -159,7 +157,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -276,25 +274,187 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline">tags</h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/库/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zurdo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zurdo">
+    </span>
 
     
-    
-      <div class="tag-cloud">
-        <div class="tag-cloud-title">
-            3 tags in total
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T19:58:58+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
-        <div class="tag-cloud-tags">
-          <a href="/tags/JAVA/" style="font-size: 12px; color: #ccc">JAVA</a> <a href="/tags/Linux/" style="font-size: 21px; color: #6f6f6f">Linux</a> <a href="/tags/数据结构/" style="font-size: 30px; color: #111">数据结构</a>
-        </div>
-      </div>
+      </header>
     
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<h3 id="静态库"><a href="#静态库" class="headerlink" title="静态库"></a>静态库</h3><ol>
+<li>静态库是再链接过程中将库文件中的相关代码复制到源文件中</li>
+<li>不需要加载库所以执行的效率更快</li>
+<li>当静态库更新后，所有使用库文件的源程序都要重新编译。（如果想要使用最新的库文件）</li>
+</ol>
+<h4 id="静态库的创建"><a href="#静态库的创建" class="headerlink" title="静态库的创建"></a>静态库的创建</h4><p>eg：hello.c</p>
+<ol>
+<li>创建文件hello.c  程序书写完成后，进行编译 </li>
+<li><code>gcc -c hello hello.c</code></li>
+<li>将生成的.o文件进行 创建库文件 <code>ar crs libhello.a   hello.o</code>（libhello.a是库名称）<br>静态库名称命名规则：以  lib  开始，以  .a   结束 库名部分需要有实际意义</li>
+<li>链接静态库（在需要调用的地方，声名函数原型，然后直接调用）</li>
+<li>编译 <code>gcc -o test test.c -L. -lhello</code>   (L是指定添加库的搜索路径，-l 是指定的要链接的库的名称， . 是当前路径)</li>
+</ol>
+<h3 id="共享库"><a href="#共享库" class="headerlink" title="共享库"></a>共享库</h3><p>链接时仅记录用到了哪个共享库中哪个符号，不复制共享库中的代码。</p>
+<ol>
+<li>多个程序可以共享一个库</li>
+<li>程序不包括库中代码、尺寸小</li>
+<li>程序运行需要加载库</li>
+<li>共享库升级方便，不需要重新编译程序</li>
+</ol>
+<h4 id="共享库的创建"><a href="#共享库的创建" class="headerlink" title="共享库的创建"></a>共享库的创建</h4><p>eg：hello.c  bye.c </p>
+<ol>
+<li>创建文件hello.c  bye.c程序书写完成后，进行编译 </li>
+<li><code>gcc -c -fPIC  bye.c hello.c</code> (-fPIC是生成位置无关代码，可以在任意地方运行)`</li>
+<li>将生成的.o文件进行 创建库文件 <code>gcc -shared -o libcommon.so.1 hello.o bye.o</code><br>(-shared是指定创建共享库文件)<br>共享库文件的命名规则：以  lib  开始，以  .so   结束 库名部分需要有实际意义 数字是库的版本号</li>
+<li>为共享库创建符号链接文件（符号链接只想真正的共享库文件）<br><code>In -s libcommon.so.1 libcommon.so</code><br>链接文件的命名规则：以lib开始，以  .so结束</li>
+<li>编译 <code>gcc -o test test.c -L. -lcommon</code>（gcc首先默认链接共享库，其次再链接静态库，如果两个都不存在就报错）</li>
+</ol>
+<h4 id="系统找到共享库的三种方式"><a href="#系统找到共享库的三种方式" class="headerlink" title="系统找到共享库的三种方式"></a>系统找到共享库的三种方式</h4><ol>
+<li>拷贝库文件到/usr/lib和/lib目录下（非常不建议）</li>
+<li>再LD_LIBRARY_PATH环境变量中添加库的路径（仅限于在当前的终端中，打开新的终端需要再次添加）</li>
+<li>在/etc/id.so.conf.d/*.conf文件，执行ldconfig刷新（需要在root权限下操作）<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/id.so.conf.d/my.conf (my.conf是自己新建的配置文件)</span><br><span class="line"> 输入当前库文件的路径</span><br><span class="line">sudo idconfig</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/I-O函数/" rel="next" title="I/O函数">
+                <i class="fa fa-chevron-left"></i> I/O函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -326,8 +486,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Zurdo">
           <p class="site-author-name" itemprop="name">Zurdo</p>
@@ -378,6 +547,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态库"><span class="nav-number">1.</span> <span class="nav-text">静态库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#静态库的创建"><span class="nav-number">1.1.</span> <span class="nav-text">静态库的创建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#共享库"><span class="nav-number">2.</span> <span class="nav-text">共享库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享库的创建"><span class="nav-number">2.1.</span> <span class="nav-text">共享库的创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#系统找到共享库的三种方式"><span class="nav-number">2.2.</span> <span class="nav-text">系统找到共享库的三种方式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -497,6 +682,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 

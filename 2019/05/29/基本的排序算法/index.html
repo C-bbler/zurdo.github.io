@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%872.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%871.png">
-<meta property="og:updated_time" content="2019-06-01T07:34:45.218Z">
+<meta property="og:updated_time" content="2019-06-02T02:34:03.274Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本的排序算法">
 <meta name="twitter:description" content="排序算法从稳定性上可以分为稳定排序和非稳定排序。">
@@ -395,7 +395,16 @@
 <li>再对每一组进行交替直接插入排序。</li>
 <li>逐渐减少增量。增量的初值为记录个数/2<br><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%872.png" alt="图片"><br>具体分析实现：<br>待排序长度为10，所以D初值为5（距离第一个记录间隔为5的称为一组）可以分为5组<br>50和12是一组，在直接插入排序后变为12，50.<br>……<br>待五组比较完成后序列变为12,25,36,24,8,50,36,66,76,95，开始缩小增量d=d/2=2，只能分为两组同一组元素相差两个位置<br><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%871.png" alt="图片"><br>排序后序列为：8,24,12,25,36,50,36,66,76,95再缩小增量d= d/2=1<br>只能分为1组可以直接进行直接插入排序<br>8,12,24,25,36,36,50,66,76,95</li>
 </ol>
-<p>③ 快速排序<br>定义：经过key的一趟排序后，确定某个记录在排序后的最终位置。（某个记录叫做基准），基准会将一组数据分为小于基准和大于基准的两部分。<br>基准的确定：一般选择记录的第一个元素作为基准。<br>例如：35，42，68，13，21，53   进行排序</p>
+<p>③ 冒泡排序<br>冒泡排序将小元素依次排向数组起始地址上，元素由小到大排列。<br>冒泡排序可以分为三个实现步骤：</p>
+<ol>
+<li>从第一个元素开始，将相邻的两个元素进行比较，直到最后两个元素完成比较。如果前一个元素大于后一个元素，就交换他们的位置，第一次循环结束后，数组末尾就是最大的元素。</li>
+<li>除去最后一个元素不比较，比较其他的元素。如果第一个元素大于第二个元素就交换他们的位置。类似与第一步。</li>
+<li>以此类推将数组中比较的文件依次递减，直到最后没有元素可以比较，结束。</li>
+</ol>
+<p>实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void bubblesort(int *array)//冒泡排序</span><br><span class="line">&#123;</span><br><span class="line">	int temp;</span><br><span class="line">	int i,j;</span><br><span class="line"> 	for(i = 0; i&lt;arrary.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for(j = 1; j&lt;arrary-i-1; j++)//每次减少比较一个元素（第一次结束后，最后一个元素不再比较，第二次结束后，最后两个元素不再比较......）</span><br><span class="line">		if(arrary[j]&gt;arrary[j+1])//前一个元素大，交换位置</span><br><span class="line"> 		&#123;</span><br><span class="line">			temp = arrary[j];</span><br><span class="line">			arrary[j] = arrary[j+1];</span><br><span class="line">			arrary[j+1] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>④ 快速排序<br>定义：经过key的一趟排序后，确定某个记录在排序后的最终位置。（某个记录叫做基准），基准会将一组数据分为小于基准和大于基准的两部分。<br>基准的确定：一般选择记录的第一个元素作为基准。<br>例如：35，42，68，13，21，53   进行排序</p>
 <p>首先将基准放入最终位置</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int onequicksort(int *a,int I,intj)</span><br><span class="line">&#123;</span><br><span class="line">temp = a[0];//第一个元素作为基准</span><br><span class="line">while(i&lt;j)   / /i是起始的下标，j是末尾的下标</span><br><span class="line">&#123;</span><br><span class="line">	//大的数字在后</span><br><span class="line">	//先比较下界元素，再比较上界元素</span><br><span class="line">	while(i&lt;j &amp;&amp; a[j]&gt;=temp)//两个角标没有相等并且下界的元素比基准要大</span><br><span class="line">		j--；//再比较下界的前一个元素</span><br><span class="line">	if(i&lt;j)  //此时a[j]&lt;temp需要将i的下标的元素写入到j的位置</span><br><span class="line">	        a[j]=a[i];</span><br><span class="line">	//一次的下界比较完成，开始比较下界</span><br><span class="line">	While(i&lt;j &amp;&amp; temp&gt;=a[i])</span><br><span class="line">		i++;</span><br><span class="line">	if(i&lt;j)</span><br><span class="line">		 a[i] = a[j];</span><br><span class="line">		</span><br><span class="line">		//下界元素一次比较完成后再次比较下界直到i&gt;=j为止</span><br><span class="line">&#125;</span><br><span class="line">	a[i] = temp;//或者a[j] = temp  因为最终 i = j</span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -451,6 +460,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/02/java面向对象/" rel="prev" title="java面向对象">
+                java面向对象 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -520,7 +533,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -533,7 +546,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

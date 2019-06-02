@@ -1,0 +1,953 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh_CH">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linux,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="文件是一组相关数据的有序集合。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I&#x2F;O函数">
+<meta property="og:url" content="http://yoursite.com/2019/06/02/I-O函数/index.html">
+<meta property="og:site_name" content="Zurdo">
+<meta property="og:description" content="文件是一组相关数据的有序集合。">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/I-O函数/mode%E5%8F%82%E6%95%B0.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/I-O函数/mode%E5%8F%82%E6%95%B01.png">
+<meta property="og:image" content="http://yoursite.com/2019/06/02/I-O函数/fcntl%E5%8F%82%E6%95%B0.png">
+<meta property="og:updated_time" content="2019-06-02T12:33:52.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="I&#x2F;O函数">
+<meta name="twitter:description" content="文件是一组相关数据的有序集合。">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/02/I-O函数/mode%E5%8F%82%E6%95%B0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/02/I-O函数/">
+
+
+
+
+
+  <title> I/O函数 | Zurdo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh_CH">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zurdo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/02/I-O函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zurdo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zurdo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                I/O函数
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-02T19:58:22+08:00">
+                2019-06-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>文件是一组相关数据的有序集合。</p>
+<a id="more"></a>
+
+<h3 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h3><p>不同的操作系统下的文件类型不完全相同。</p>
+<ol>
+<li>常规文件 r （包括文本文件，二进制文件）</li>
+<li>目录文件 d</li>
+<li>字符设备文件 c</li>
+<li>块设备文件 b（每一个设备文件表示一个设备）</li>
+<li>管道文件 p   （管道是进程通信的一种机制）</li>
+<li>套接字文件 s  （套接字是进程通信的一种机制）</li>
+<li>符号链接文件 l （类似于windows下的快捷方式）</li>
+</ol>
+<hr>
+<h3 id="标准I-O"><a href="#标准I-O" class="headerlink" title="标准I/O"></a>标准I/O</h3><p>c库中已经定义好的I/O，只要由C库就能使用。<br>特点：通过缓冲机制减少系统调用，提高访问效率</p>
+<p>代码通过地址的操作直接对硬件做出控制（裸机开发）<br>通过操作系统对硬件进行操作，由操作系统的应用程序接口实现（这层接口叫做系统调用）</p>
+<h4 id="标准I-O-流"><a href="#标准I-O-流" class="headerlink" title="标准I/O-流"></a>标准I/O-流</h4><p>标准io用一个结构体类型来存放打开的文件的相关信息，所有的文件都是基于FILE结构体操作。<br><code>FILE *fp;</code></p>
+<h4 id="标准I-O-文本流和二进制流"><a href="#标准I-O-文本流和二进制流" class="headerlink" title="标准I/O-文本流和二进制流"></a>标准I/O-文本流和二进制流</h4><p>windows下 文本流换行符是 \r\n<br>          二进制流换行符是\n<br>linux下   换行符是\n</p>
+<h4 id="标准I-O-流的缓冲类型"><a href="#标准I-O-流的缓冲类型" class="headerlink" title="标准I/O-流的缓冲类型"></a>标准I/O-流的缓冲类型</h4><p>全缓冲：当缓冲区满的时候才执行IO操作（读操作）<br>行缓冲：当输入或者输出的时候遇到换行符进行IO操作<br>无缓冲：数据直接写入文件，不进行缓冲</p>
+<p>打开标准文件时默认全缓冲，标准输出的时默认行缓冲，想标准错误写入的时候默认无缓冲（在输出的时候必须要加上\n）<br>标准的I/O预定义三个流 stdin/stdout/stderr（标准输入/输出/错误）</p>
+<h4 id="标准I-O-流的打开"><a href="#标准I-O-流的打开" class="headerlink" title="标准I/O-流的打开"></a>标准I/O-流的打开</h4><p><code>FILE *fopen(const char *path,const char *mode)</code><br>// 打开路径加文件名（如果只有文件名默认在当前目录下），不同的流打开方式（6种）<br>成功返回流指针，失败返回NULL<br>六种流的打开方式<br><img src="/2019/06/02/I-O函数/mode%E5%8F%82%E6%95%B0.png" alt="图片"><br>①在Windows下参数b代表以二进制流打开，在Linux下忽略<br>②w和w+打开文件时文件的原内容被清空<br><img src="/2019/06/02/I-O函数/mode%E5%8F%82%E6%95%B01.png" alt="图片"></p>
+<h4 id="标准I-O-fopen打开一个流"><a href="#标准I-O-fopen打开一个流" class="headerlink" title="标准I/O-fopen打开一个流"></a>标准I/O-fopen打开一个流</h4><p>fopen新建的文件默认权限是066（rw-rw-rw）<br>同时在Linux中文件的权限受umask影响（默认权限和umask取反后进行与操作）（umask默认是022）<br>umask可以通过函数修改，可以设置其值为000就不会再影响默认文件权限</p>
+<h4 id="标准I-O-错误信息处理"><a href="#标准I-O-错误信息处理" class="headerlink" title="标准I/O-错误信息处理"></a>标准I/O-错误信息处理</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> extern int errno;//存放错误号 （定义在errno.h中）</span><br><span class="line"> void perror(const char *s);//先输出字符串s，再输出错误号对应的错误信息</span><br><span class="line"> char * strerror(int errno);//根据错误号返回错误信息  </span><br><span class="line">//（声名在string.h中，使用时需要包含string.h 和errno.h ）</span><br></pre></td></tr></table></figure>
+
+<h4 id="标准I-O-流的关闭"><a href="#标准I-O-流的关闭" class="headerlink" title="标准I/O-流的关闭"></a>标准I/O-流的关闭</h4><p> <code>int fclose(FILE *stream);//参数是之前打开的流指针</code><br>成功返回0，失败返回EOR，并设置errno<br>当程序结束后，所有流自动关闭(流关闭时会自动刷新缓冲区并且释放缓冲区)</p>
+<h4 id="标准I-O-读写流"><a href="#标准I-O-读写流" class="headerlink" title="标准I/O-读写流"></a>标准I/O-读写流</h4><p>读写一个字符:fgetc()/fputc()   每次读取/写入一个字符<br>读写一行:fgets()/fputs()<br>读取若干个对象：fread()/fwrite()  每次读/写若干个对象，并且每个对象具有相同的长度</p>
+<h4 id="标准I-O-按字符输入"><a href="#标准I-O-按字符输入" class="headerlink" title="标准I/O-按字符输入"></a>标准I/O-按字符输入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> int fgetc(FILE *stream);</span><br><span class="line"> int getc(FILE * stream);//和第一个完全相同</span><br><span class="line"> int getchar(void);//和fgetc(stdin)相同</span><br></pre></td></tr></table></figure>
+
+<p>读取成功返回的是读取到的字符，失败返回EOR （-1） </p>
+<h4 id="标准I-O-按字符输出"><a href="#标准I-O-按字符输出" class="headerlink" title="标准I/O-按字符输出"></a>标准I/O-按字符输出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> int fputc(int c,FILE *stream);//将指定字符写入流文件中</span><br><span class="line"> int putc(int c,FILE * stream);//和第一个完全相同</span><br><span class="line"> int putchar(int c);//和fputc(c,stdout)相同</span><br></pre></td></tr></table></figure>
+
+<p>读取成功返回的是读取到的字符，失败返回EOR （-1） </p>
+<p>常用diff 比较两个文本文件是否相同</p>
+<h4 id="标准I-O-按行输入"><a href="#标准I-O-按行输入" class="headerlink" title="标准I/O-按行输入"></a>标准I/O-按行输入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"> char *gets(char *s);//只指定缓冲区的首地址</span><br><span class="line"> char *fgets (char *s,int SIZE,FILE * stream);//size指出缓冲区的大小</span><br></pre></td></tr></table></figure>
+
+<h4 id="标准I-O-按行输出"><a href="#标准I-O-按行输出" class="headerlink" title="标准I/O-按行输出"></a>标准I/O-按行输出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">char puts(const char *s);</span><br><span class="line">char fputs (const char *s,FILE * stream);</span><br></pre></td></tr></table></figure>
+
+<h4 id="标准I-O-按指定对象读写"><a href="#标准I-O-按指定对象读写" class="headerlink" title="标准I/O-按指定对象读写"></a>标准I/O-按指定对象读写</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">size_t fread(void *ptr,size_t size,size_t n,FILE *fp);//缓冲区的首地址，指定读取每个队对象的大小，读取多少个对象，指定从那个流中读取数据</span><br><span class="line">size_t fwrite(const void *ptr,size_t size,size_t n,FILE *fp);</span><br></pre></td></tr></table></figure>
+
+<p>执行成功返回实际读写的对象个数，失败返回-1<br>eg：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int s[10];</span><br><span class="line">if(fread(s,sizeof(int),10,fp)&lt;0)//每次从流中读取十个int型的数，存放到缓冲区s中</span><br><span class="line">&#123;</span><br><span class="line">	perror(&quot;fread&quot;);</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实例：实现文件的复制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#define N 64</span><br><span class="line">int main(int argc,char *argv[])//argc是命令行总的参数个数  </span><br><span class="line">&#123;</span><br><span class="line"> FILE *fps,*fpd;</span><br><span class="line"> char a[N];</span><br><span class="line"> int n = 0;</span><br><span class="line"> if(argc&lt;3)//参数判断,需要执行的时候再输入两个文件名</span><br><span class="line"> &#123;</span><br><span class="line">	 printf(&quot;user: %s is error! &lt;src&gt; &lt;dev&gt;&quot;,argv[0]);</span><br><span class="line">	 return -1;</span><br><span class="line"> &#125;</span><br><span class="line">//打开源文件</span><br><span class="line"> if((fps=fopen(argv[1],&quot;r&quot;))==NULL)</span><br><span class="line"> &#123;</span><br><span class="line">	 perror(&quot;fopen&quot;);</span><br><span class="line">	 return -1;</span><br><span class="line"> &#125;</span><br><span class="line">//打开将要复制的文件</span><br><span class="line"> if((fpd=fopen(argv[2],&quot;r&quot;))==NULL)</span><br><span class="line"> &#123;</span><br><span class="line">	 perror(&quot;fopen&quot;);</span><br><span class="line">	 return -1;</span><br><span class="line"> &#125;</span><br><span class="line"> while(n = fread(a,sizeof(char),N,fps)&gt;0)//一次性读取N个字符到缓冲区</span><br><span class="line"> &#123;</span><br><span class="line">     fwrite(a,sizeof(char),n,fpd);//读取到多少数据写入多少数据</span><br><span class="line"> &#125;</span><br><span class="line">//关闭流指针</span><br><span class="line"> fclose(fps);</span><br><span class="line"> fclose(fpd);</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>argv[]为保存命令行参数的字符串指针，其中第0个参数是程序的全名，以后的参数为命令行后面跟的用户输入的参数，argv参数是字符串指针数组，其各元素值为命令行中各字符串(参数均按字符串处理)的首地址。 指针数组的长度即为参数个数argc。数组元素初值由系统自动赋予。</p>
+<h4 id="标准I-O-刷新流-将缓冲区的数据写入到文件中"><a href="#标准I-O-刷新流-将缓冲区的数据写入到文件中" class="headerlink" title="标准I/O-刷新流(将缓冲区的数据写入到文件中)"></a>标准I/O-刷新流(将缓冲区的数据写入到文件中)</h4><p>1.当缓冲区满的时候（全缓冲是缓冲区满，行缓冲是缓冲区满或者遇到遇到换行符）<br>2.当流关闭时，会将缓冲区的数据写入文件中<br>3.使用特定函数时   <code>int fflush(FILE *fp)</code></p>
+<p>执行成功返回0，失败返回-1<br>在linux中只能对输出缓冲区进行刷新</p>
+<h4 id="标准I-O-定位流（找到文件中某个位置）"><a href="#标准I-O-定位流（找到文件中某个位置）" class="headerlink" title="标准I/O-定位流（找到文件中某个位置）"></a>标准I/O-定位流（找到文件中某个位置）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">long ftell(FILE *stream);//获取流的当前读取位置，默认在文件起始位置为0</span><br><span class="line">long fseek(FILE *stream,long offset,int whence);//设定一个流的读写位置（流指针，偏移量，基准点）读写位置为基准点＋偏移量</span><br><span class="line">void rewind(FILE *stream);//直接将流定位到起始位置</span><br></pre></td></tr></table></figure>
+
+<p> whence参数：SEEK_SET/SEEK_CUR/SEEK_END(起始位置，当前位置，末尾位置)</p>
+<h4 id="标准I-O-格式化输出"><a href="#标准I-O-格式化输出" class="headerlink" title="标准I/O-格式化输出"></a>标准I/O-格式化输出</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int printf(const char *fmt);//将一个字符串输出到标准输出流中（终端）</span><br><span class="line">int fprintf(FILE*stream,const char *fmt,…);//将结果输出到指定流文件中，若第一个流指针参数指定为stdout（标准输出流）则和printf一样</span><br><span class="line">int sprintf(char *s,const char *fmt,…);//输出到缓冲区中,第一个参数是缓冲区的首地址</span><br></pre></td></tr></table></figure>
+
+<p> eg:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int year,mount,day;</span><br><span class="line">FILE *fp;</span><br><span class="line">char buf[64];</span><br><span class="line">year = 2019;mount = 5; day = 1;</span><br><span class="line">fp = fopen(&quot;text.txt&quot;,&quot;a+&quot;);</span><br><span class="line">fprintf(fp,&quot;%d-%d-%d\n&quot;,year,mount,day);//将年月日写入到fp流中</span><br><span class="line">sprintf(buf,&quot;%d-%d-%d\n&quot;,year,mount,day);</span><br></pre></td></tr></table></figure>
+
+<p>实例：记录本地时间到记事本文件中，以一秒的间隔</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;time.h&gt;   //time,localtime</span><br><span class="line">#include &lt;unistd.h&gt; //sleep</span><br><span class="line"></span><br><span class="line">#define N 64</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	FILE *fp;</span><br><span class="line">	int line=0;</span><br><span class="line">	char buf[N];</span><br><span class="line">	time_t t;//time的参数</span><br><span class="line">	struct tm *tp;//localtime函数的所需要的参数</span><br><span class="line">	if((fp = fopen(&quot;text.txt&quot;,&quot;a+&quot;))==NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;fopen&quot;);</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while(fgets(buf,N,fp)!=NULL)//读取一个文件,按行读取</span><br><span class="line">	&#123;</span><br><span class="line">		if(buf[strlen(buf)-1]==&apos;\n&apos;) //判断是否读取完成一行，每一行读取完成后最后一位都是一个换行符</span><br><span class="line">			line++;</span><br><span class="line">	&#125;</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		time(&amp;t);</span><br><span class="line">		tp = localtime(&amp;t);</span><br><span class="line">		fprintf(fp,&quot;%2d,%d-%2d-%2d  %d:%2d:%2d\n&quot;,++line,tp-&gt;tm_year+1900,tp-&gt;tm_mon+1,tp-&gt;tm_mday,tp-&gt;tm_hour,tp-&gt;tm_min,tp-&gt;tm_sec);</span><br><span class="line">		fflush(fp);//立即刷新流，将时间写入</span><br><span class="line">		sleep(1);//1s的时间间隔</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="文件I-O"><a href="#文件I-O" class="headerlink" title="文件I/O"></a>文件I/O</h3><p>定义：<br>①posix定义的一组函数<br>②不提供缓冲机制，每一次执行都会进行系统调用<br>③通过文件描述符操作<br>④可以访问各种文件类型<br>⑤Linux下，标准IO基于文件IO实现的（文件IO更加底层）</p>
+<p>和标准I/O的区别：<br>①标准IO遵循ANSIC标准，文件IO遵循POSIX（可移植操作系统接口）规范<br>②标准IO有缓冲区，文件IO没有缓冲区<br>③标准IO通过流(FILE)来表示文件的打开，文件IO通过文件描述符(fp)表示</p>
+<h4 id="文件I-O-文件描述符"><a href="#文件I-O-文件描述符" class="headerlink" title="文件I/O-文件描述符"></a>文件I/O-文件描述符</h4><p>①每个打开的文件都有对那个的一个文件描述符<br>②文件描述符是一个非负数<br>③文件描述符的分配是从0开始，按照最小的可用的分配<br>④文件IO操作时通过文件描述符来完成的<br>⑤stdin,stdout,stderr对应的文件描述符分别是0,1,2</p>
+<h4 id="文件I-O-open"><a href="#文件I-O-open" class="headerlink" title="文件I/O-open"></a>文件I/O-open</h4><p>创建或者打开一个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;fcntl.h&gt;</span><br><span class="line">int open(const char *path,int flag,….);指定路径/文件名 ，打开方式</span><br></pre></td></tr></table></figure>
+
+<p>①打开文件两个参数就够了，新建文件需要第三个参数指定文件的权限<br>②成功返回文件描述符(整形变量)，失败返回-1<br>③设备文件不能通过open创建，只能被打开<br>函数原型:<code>int open (const char *path,int flag,mode_t mode)</code></p>
+<p><img src="/2019/06/02/I-O函数/fcntl%E5%8F%82%E6%95%B0.png" alt="图片"></p>
+<p>eg ： 以读写方式打开1.txt文件，如果文件不存在就创建，如果存在就删除之</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int fp;</span><br><span class="line"> fp = open(&quot;1.txt&quot;,O_RDWR|O_CREAT|O_TRUNC,0666);</span><br></pre></td></tr></table></figure>
+
+<h4 id="文件I-O-close"><a href="#文件I-O-close" class="headerlink" title="文件I/O-close"></a>文件I/O-close</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">int close(int fd);</span><br></pre></td></tr></table></figure>
+
+<p>①成功返回0，失败返回-1</p>
+<h4 id="文件I-O-read"><a href="#文件I-O-read" class="headerlink" title="文件I/O-read"></a>文件I/O-read</h4><p> 从文件中读取数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">ssize_t read (int fd,void *buf,size_t count);//文件描述符，缓冲区首地址，读取的字节数（不能超过缓冲区的大小）</span><br></pre></td></tr></table></figure>
+
+<p>①读取成功返回读取实际读取到的字节数，失败返回EOR<br>②读到文件末尾返回值为0</p>
+<h4 id="文件I-O-write"><a href="#文件I-O-write" class="headerlink" title="文件I/O-write"></a>文件I/O-write</h4><p> 从文件中写入数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">ssize_t  write (int fd,void *buf,size_t count);//事先在BUF中写入数据</span><br></pre></td></tr></table></figure>
+
+<p>①读取成功返回实际写入的字节数，失败返回EOR</p>
+<h4 id="文件I-O-Iseek"><a href="#文件I-O-Iseek" class="headerlink" title="文件I/O-Iseek"></a>文件I/O-Iseek</h4><p>对文件定位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">off_t lseek (int fd,off_t offset,intt whence);//基准点，偏移量</span><br></pre></td></tr></table></figure>
+
+<p>①成功返回当前文件读取位置，失败返回EOF</p>
+<p>实例：利用文件IO实现复制文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;fcntl.h&gt; //open</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line"></span><br><span class="line">#define N 64</span><br><span class="line">int main(int argc,char *argv[])</span><br><span class="line">&#123;</span><br><span class="line">   	 int fps,fpd,n;</span><br><span class="line"> char buf[N];</span><br><span class="line"> if(argc&lt;3)//输入的少于三个参数</span><br><span class="line"> &#123;</span><br><span class="line">         printf(&quot;User : %s &lt;src&gt;,&lt;dev&gt;&quot;,argv[0]);</span><br><span class="line">         return -1;</span><br><span class="line"> &#125;</span><br><span class="line">	 if((fps = open(argv[1],O_REONLY))&lt;0)</span><br><span class="line">&#123;</span><br><span class="line">         perror(&quot;open&quot;);</span><br><span class="line">         return -1;  </span><br><span class="line">&#125;</span><br><span class="line"> if((fpd = open(argv[2],O_WRONLY|O_CREAT|O_TRUNC,0666))&lt;0)</span><br><span class="line">&#123;</span><br><span class="line">         perror(&quot;open&quot;);</span><br><span class="line">         return -1;  </span><br><span class="line">&#125;</span><br><span class="line"> while((n = read(fpd,buf,N))&gt;0)</span><br><span class="line">&#123;</span><br><span class="line">        write(fpd,buf,n);</span><br><span class="line">&#125;</span><br><span class="line"> close(fpd);</span><br><span class="line"> close(fps);</span><br><span class="line"> return 0;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="访问目录-opendir（打开目录）"><a href="#访问目录-opendir（打开目录）" class="headerlink" title="访问目录- opendir（打开目录）"></a>访问目录- opendir（打开目录）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;dirent.h&gt;</span><br><span class="line">DIR *opendir (const char *name);</span><br></pre></td></tr></table></figure>
+
+<p> ①成功返回目录流指针，失败返回EOR</p>
+<h4 id="访问目录-readdir（读取目录流中的内容）"><a href="#访问目录-readdir（读取目录流中的内容）" class="headerlink" title="访问目录-readdir（读取目录流中的内容）"></a>访问目录-readdir（读取目录流中的内容）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;dirent.h&gt;</span><br><span class="line">struct dirent  *readdir(DIR *dirp);</span><br></pre></td></tr></table></figure>
+
+<p>①读到目录结尾会返回一个空指针<br>②读取成功返回目录流的下一个目录项</p>
+<h4 id="访问目录-closedir"><a href="#访问目录-closedir" class="headerlink" title="访问目录-closedir"></a>访问目录-closedir</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;dirent.h&gt;</span><br><span class="line">int close (DIR *dirp);</span><br></pre></td></tr></table></figure>
+
+<p>修改文件的访问权限 - chmod/fchmod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#inlude &lt;sys/stat.h&gt;</span><br><span class="line">int chmod (const char *path,mode_t mode);//指定路径/文件名 更改</span><br><span class="line">int fchmod (int fd,mode_t mode);//通过文件描述符更改权限</span><br></pre></td></tr></table></figure>
+
+<p>①执行成功返回0，失败返回EOR<br>②修改文件权限时需要root权限<br> eg: <code>chmod(&quot;text.txt&quot;,0666);</code></p>
+<h4 id="获取文件属性-stat-lstat-fstat"><a href="#获取文件属性-stat-lstat-fstat" class="headerlink" title="获取文件属性 - stat/lstat/fstat"></a>获取文件属性 - stat/lstat/fstat</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/stat.h&gt;</span><br><span class="line">int stat(const char *path,  struct stat *buf);</span><br><span class="line">int lstat(const char *path,  struct stat *buf);</span><br><span class="line">int fstat(int fd,  struct *buf);</span><br></pre></td></tr></table></figure>
+
+<p>①如果path是符号链接stat获取的是目标文件的属性；而lstat获取的是连接文件的属性<br>②成功返回0，失败返回EOR</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/02/java面向对象/" rel="next" title="java面向对象">
+                <i class="fa fa-chevron-left"></i> java面向对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/02/库/" rel="prev" title="库">
+                库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Zurdo">
+          <p class="site-author-name" itemprop="name">Zurdo</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件类型"><span class="nav-number">1.</span> <span class="nav-text">文件类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准I-O"><span class="nav-number">2.</span> <span class="nav-text">标准I/O</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-流"><span class="nav-number">2.1.</span> <span class="nav-text">标准I/O-流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-文本流和二进制流"><span class="nav-number">2.2.</span> <span class="nav-text">标准I/O-文本流和二进制流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-流的缓冲类型"><span class="nav-number">2.3.</span> <span class="nav-text">标准I/O-流的缓冲类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-流的打开"><span class="nav-number">2.4.</span> <span class="nav-text">标准I/O-流的打开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-fopen打开一个流"><span class="nav-number">2.5.</span> <span class="nav-text">标准I/O-fopen打开一个流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-错误信息处理"><span class="nav-number">2.6.</span> <span class="nav-text">标准I/O-错误信息处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-流的关闭"><span class="nav-number">2.7.</span> <span class="nav-text">标准I/O-流的关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-读写流"><span class="nav-number">2.8.</span> <span class="nav-text">标准I/O-读写流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-按字符输入"><span class="nav-number">2.9.</span> <span class="nav-text">标准I/O-按字符输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-按字符输出"><span class="nav-number">2.10.</span> <span class="nav-text">标准I/O-按字符输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-按行输入"><span class="nav-number">2.11.</span> <span class="nav-text">标准I/O-按行输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-按行输出"><span class="nav-number">2.12.</span> <span class="nav-text">标准I/O-按行输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-按指定对象读写"><span class="nav-number">2.13.</span> <span class="nav-text">标准I/O-按指定对象读写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-刷新流-将缓冲区的数据写入到文件中"><span class="nav-number">2.14.</span> <span class="nav-text">标准I/O-刷新流(将缓冲区的数据写入到文件中)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-定位流（找到文件中某个位置）"><span class="nav-number">2.15.</span> <span class="nav-text">标准I/O-定位流（找到文件中某个位置）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准I-O-格式化输出"><span class="nav-number">2.16.</span> <span class="nav-text">标准I/O-格式化输出</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件I-O"><span class="nav-number">3.</span> <span class="nav-text">文件I/O</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#文件I-O-文件描述符"><span class="nav-number">3.1.</span> <span class="nav-text">文件I/O-文件描述符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件I-O-open"><span class="nav-number">3.2.</span> <span class="nav-text">文件I/O-open</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件I-O-close"><span class="nav-number">3.3.</span> <span class="nav-text">文件I/O-close</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件I-O-read"><span class="nav-number">3.4.</span> <span class="nav-text">文件I/O-read</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件I-O-write"><span class="nav-number">3.5.</span> <span class="nav-text">文件I/O-write</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#文件I-O-Iseek"><span class="nav-number">3.6.</span> <span class="nav-text">文件I/O-Iseek</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问目录-opendir（打开目录）"><span class="nav-number">3.7.</span> <span class="nav-text">访问目录- opendir（打开目录）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问目录-readdir（读取目录流中的内容）"><span class="nav-number">3.8.</span> <span class="nav-text">访问目录-readdir（读取目录流中的内容）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问目录-closedir"><span class="nav-number">3.9.</span> <span class="nav-text">访问目录-closedir</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取文件属性-stat-lstat-fstat"><span class="nav-number">3.10.</span> <span class="nav-text">获取文件属性 - stat/lstat/fstat</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zurdo</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
