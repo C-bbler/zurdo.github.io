@@ -1,0 +1,944 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh_CH">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Linxu,">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="与进程不同的是，同一个进程的线程的地址都是互相共享的。">
+<meta name="keywords" content="Linxu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程">
+<meta property="og:url" content="http://yoursite.com/2019/06/19/线程/index.html">
+<meta property="og:site_name" content="Zurdo">
+<meta property="og:description" content="与进程不同的是，同一个进程的线程的地址都是互相共享的。">
+<meta property="og:locale" content="zh_CH">
+<meta property="og:updated_time" content="2019-06-19T13:44:29.132Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程">
+<meta name="twitter:description" content="与进程不同的是，同一个进程的线程的地址都是互相共享的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/19/线程/">
+
+
+
+
+
+  <title> 线程 | Zurdo </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh_CH">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zurdo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/19/线程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zurdo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zurdo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                线程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-19T21:14:35+08:00">
+                2019-06-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>与进程不同的是，同一个进程的线程的地址都是互相共享的。</p>
+<a id="more"></a>
+<p>进程是系统为执行任务而分配的资源，进程有自己独立的地址空间，每个进程都只可以访问自己的内存地址。进程之间互不影响都可以供系统内核单独调用。</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>线程就是轻量级的进程（LWP），其实在Linux中不区分进程和线程，都会创建一个task_struct进行描述。<br>区分线程和进程最简单的方法就是：同时一个task_struct访问地址空间的就是进程，如果同时有多个task_struct访问地址空间的就是线程。</p>
+<h4 id="线程的资源"><a href="#线程的资源" class="headerlink" title="线程的资源"></a>线程的资源</h4><p>线程的资源分为共享资源和私有资源。</p>
+<ol>
+<li>共享资源：可执行的指令、静态数据、进程打开的文件描述符、当前的工作目录、用户ID、用户组ID</li>
+<li>私有资源：线程ID、PC及相关寄存器、堆栈、错误号、优先级、执行状态和周期</li>
+</ol>
+<h3 id="线程库"><a href="#线程库" class="headerlink" title="线程库"></a>线程库</h3><p>pthread线程库提供创建，回收，结束线程。</p>
+<h4 id="线程的创建-pthread-create"><a href="#线程的创建-pthread-create" class="headerlink" title="线程的创建 - pthread_create"></a>线程的创建 - pthread_create</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">int pthread_create (pthread_t  *thread, const pthread_attr_t  *attr,void *(*rountine)(void *),   void *arg);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>成功返回0，失败返回错误码</li>
+<li>thread线程对象，通过线程对象来创建一个线程</li>
+<li>pthread_attr_t *attr是线程的属性，一般采取默认NULL</li>
+<li>rountine 线程执行的函数arg传递给rountine的参数，如果不需要就传入NULL</li>
+</ol>
+<h5 id="线程的回收-pthread-join"><a href="#线程的回收-pthread-join" class="headerlink" title="线程的回收 - pthread_join"></a>线程的回收 - pthread_join</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">int pthread_join(pthread_t  thread,void **retval);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>成功返回0，失败返回错误码</li>
+<li>thread是指定回收某个线程，若该线程未结束，调用线程会一直阻塞直到thread线程结束</li>
+<li>retval是接收函数返回的地址。二级指针，定义一个一级指针传入其地址就行。</li>
+</ol>
+<h4 id="线程的结束-pthread-exit"><a href="#线程的结束-pthread-exit" class="headerlink" title="线程的结束 -pthread_exit"></a>线程的结束 -pthread_exit</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">void pthread_exit(void *retval);//没有返回值</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>结束当前线程</li>
+<li>使用exit()  当前进程中的所有线程都会结束<br>实例：创建一个线程</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;   //strcpy()</span><br><span class="line">#include &lt;pthread.h&gt;  </span><br><span class="line">#include &lt;unistd.h&gt;  //perror()</span><br><span class="line">#include &lt;stdlib.h&gt;   //exit()</span><br><span class="line"></span><br><span class="line">#define N  100</span><br><span class="line"></span><br><span class="line">char message[N] = &#123;&quot;this is process&quot;&#125;;</span><br><span class="line">void *thread_func(void *arg);</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	pthread_t a_thread;</span><br><span class="line">	void *result;</span><br><span class="line">	if((pthread_create(&amp;a_thread,NULL,thread_func,NULL)!=0))//创建一个线程</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&quot;creatr&quot;);</span><br><span class="line">		exit(-1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pthread_join(a_thread,&amp;result);</span><br><span class="line">	printf(&quot;resule is %s\n&quot;,result);//这个地方会出警告，但是不能进行强制类型转换</span><br><span class="line">	printf(&quot;message is %s\n&quot;,message);</span><br><span class="line">	return 0;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void *thread_func(void *arg)</span><br><span class="line">&#123;</span><br><span class="line">	sleep(1);//休眠1S</span><br><span class="line">	strcpy(message,&quot;ororororor&quot;);</span><br><span class="line">	pthread_exit(&quot;thank you foe waiting foe me&quot;);</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">结果：首先打印exit()结束的语句，其次打印拼接字符串的字符语句。</span><br><span class="line">thank you foe waiting foe me</span><br><span class="line">this is processororororor</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<h3 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h3><p>线程间通信因为进程是共享同一进程的地址空间，所以在通信的时候可以通过全局变量交换数据，痛是需要采取同步或者互斥机制。<br>线程通信-同步</p>
+<ol>
+<li>多个任务按照约定的先后次序相互配合完成一件事情。</li>
+<li>基于信号量进行操作。</li>
+<li>由信号量决定线程是继续运行还是阻塞等待。<h4 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h4>代表某一类资源的数量。<br>信号量受保护，只能采用三种方式进行访问，</li>
+<li>初始化</li>
+<li>P操作（申请操作）</li>
+<li>V操作（释放资源）<h4 id="Posix-信号量（Linux遵循Posix规范）"><a href="#Posix-信号量（Linux遵循Posix规范）" class="headerlink" title="Posix 信号量（Linux遵循Posix规范）"></a>Posix 信号量（Linux遵循Posix规范）</h4>定义了两种信号量：</li>
+<li>无名信号量（基于内存的信号量），主要用于进程中的线程同步</li>
+<li>有名信号量，可以使用在进程和线程之间通信<h4 id="P-V操作"><a href="#P-V操作" class="headerlink" title="P/V操作"></a>P/V操作</h4>p操作如果申请不到资源就会一直阻塞（P操作只有两种结果，一种是成功申请资源，信号量减一，另外一种就是没有资源一直阻塞，直至有资源释放）<br>v操作之后信号量会增加一，若有任务在等待该资源，内核会唤醒等待资源的任务执行P操作。</li>
+</ol>
+<h3 id="信号量操作函数"><a href="#信号量操作函数" class="headerlink" title="信号量操作函数"></a>信号量操作函数</h3><h4 id="信号量初始化-sem-init"><a href="#信号量初始化-sem-init" class="headerlink" title="信号量初始化 - sem_init"></a>信号量初始化 - sem_init</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;semaphore.h&gt;</span><br><span class="line">int sem_init(sem_t *sem,int pshared,unsignde int value);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>信号量创建成功必须进行初始化操作。</li>
+<li>成功返回0，失败返回EOR。</li>
+<li>sem_t   *sem是指向要进行初始化的信号量对象（首先要定义一个信号量对象）。</li>
+<li>pshared 是表明信号量的适用范围（0表示线程间使用，非0表示进程间使用）。</li>
+<li>value表示信号量的初值，0代表没有资源。</li>
+</ol>
+<h4 id="信号量初始化-p-v操作"><a href="#信号量初始化-p-v操作" class="headerlink" title="信号量初始化 -  p/v操作"></a>信号量初始化 -  p/v操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;semaphore.h&gt;</span><br><span class="line">int sem_wait(sem_t  *sem);   //P操作</span><br><span class="line">int sem_post(sem_t  *sem);    //V操作</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>成功返回0，失败返回EOR。</li>
+<li>sem_t   *sem是指向要进行初始化的信号量对象。</li>
+<li>需要访问某个资源，仅需要进行P操作，访问资源结束后进行V操作。</li>
+<li>对信号量初始化一定要在创建线程之前。（因为信号量只能被初始化一次，如果先创建了线程，新建线程和主线程的执行顺序不确定，可能线程直接去操作信号量，而此时信号量还没有被初始化）</li>
+</ol>
+<h4 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h4><p>生产者消费者是一个很典型的同步问题，只有等待生产者制造出某些物品后，消费者才能进行使用。此时生产者就是V操作（释放资源），而消费者就是P操作（申请资源）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line"> #include &lt;pthread.h&gt;</span><br><span class="line"> #include &lt;semaphore.h&gt;</span><br><span class="line"> #include &lt;stdio.h&gt;</span><br><span class="line"> #include &lt;string.h&gt;</span><br><span class="line"> #include &lt;stdlib.h&gt; </span><br><span class="line"></span><br><span class="line"> char buf[32];//缓冲区</span><br><span class="line"> sem_t sem;//信号量</span><br><span class="line">//实现严格的同步</span><br><span class="line">//sem_t sem_r,sem_w;   写入时检测信号量，读取时也要检测信号量</span><br><span class="line"> void *function(coid *arg); //创建线程需要执行的函数</span><br><span class="line"> </span><br><span class="line"> int main()</span><br><span class="line">&#123;</span><br><span class="line"> pthread_t a_thread;//线程对象</span><br><span class="line"> if(sem_init(&amp;sem,0,0)&lt;0) //信号量只能再线程之间使用，并且初始值为0</span><br><span class="line">&#123;</span><br><span class="line">      peero (&quot;sem_init&quot;); //打印错误信息 </span><br><span class="line">        exit(-1);// 由于异常而结束</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line"> if(sem_init(&amp;sem_r,0,0)&lt;0) //读取，默认缓冲区中没有数据，所以信号量默认为0</span><br><span class="line">&#123;</span><br><span class="line">      peero (&quot;sem_init&quot;); //打印错误信息 </span><br><span class="line">        exit(-1);// 由于异常而结束</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> if(sem_init(&amp;sem_W,0,1)&lt;0) //写入，初始化没有进程读取缓冲区，所以允许写，相当于有资源</span><br><span class="line">&#123;</span><br><span class="line">      peero (&quot;sem_init&quot;); //打印错误信息 </span><br><span class="line">        exit(-1);// 由于异常而结束</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">*/</span><br><span class="line">if(pthread_create(&amp;a_thread,NULL,function,NULL)!=0)</span><br><span class="line">&#123;</span><br><span class="line">	 printf(&quot;pthread_create&quot;);</span><br><span class="line">	 exit(-1); //创建失败退出</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//主线程 --写线程</span><br><span class="line"> printf(&quot;input &apos;quit&apos; to exit\n&quot;); //提示输入quit结束输入</span><br><span class="line"> do</span><br><span class="line">&#123;</span><br><span class="line">	 //sem_wait(&amp;sem_W);  写入之前检测信号量是否可以操作</span><br><span class="line">	 fgets(buf,32,stdin); //从标准输入读取一个字符串存放在buf中（键盘输入）</span><br><span class="line">	 sem_post(&amp;sem); //V操作，已经像缓冲区写入了数据，信号量存在且不为零</span><br><span class="line">	//sem_post(&amp;sem_r); </span><br><span class="line">&#125;while(strncmp(buf,&quot;quit&quot;,4)!=0);</span><br><span class="line"></span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> void *function(void *arg)</span><br><span class="line">&#123;</span><br><span class="line"> while(1)</span><br><span class="line">&#123;</span><br><span class="line">  	 //sem_wait(&amp;sem_r); </span><br><span class="line">	 sem_wait(&amp;sem); //申请信号量 P操作</span><br><span class="line">	 printf(&quot;you enter %d characters \n&quot;,strlen(buf));//获取缓冲区的数据长度</span><br><span class="line">	//sem_post(&amp;sem_w);  释放资源，允许再此写入</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">/*</span><br><span class="line">在实际中读线程和写线程都应该进行检查，读线程对信号量进行检查，判断是否有可用资源，而写线程应该对缓冲区进行检查判断是否有足够的空间来写入数据。</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<h3 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h3><p>其中有两个概念，临界资源和临界区。</p>
+<ol>
+<li>临界资源：临界资源通常是一种共享资源，可以被多个线程访问，但是同时只能被一个任务（进程、线程）访问。</li>
+<li>临界区：访问临界资源的代码称为临界区，要实现临界资源的保护，必须将临界区设置为互斥。</li>
+</ol>
+<h3 id="互斥机制-mutex互斥锁"><a href="#互斥机制-mutex互斥锁" class="headerlink" title="互斥机制-mutex互斥锁"></a>互斥机制-mutex互斥锁</h3><p>互斥锁的作用，只能被一个任务所持有。任何一个任务在访问资源前申请锁，访问结束后释放锁。</p>
+<h4 id="互斥锁的初始化-pthtread-mutex-init"><a href="#互斥锁的初始化-pthtread-mutex-init" class="headerlink" title="互斥锁的初始化 - pthtread_mutex_init"></a>互斥锁的初始化 - pthtread_mutex_init</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">int pthread_mutex_init(pthread_mutex_t  *mutex,const pthread_mutexatr_t  *attr);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>成功返回0，失败返回EOR</p>
+</li>
+<li><p>mutex指向初始化的互斥锁对象</p>
+</li>
+<li><p>attr 互斥锁的属性，一般使用默认属性 故设置为NULL</p>
+<h4 id="申请锁-pthread-mutex-lock"><a href="#申请锁-pthread-mutex-lock" class="headerlink" title="申请锁 - pthread_mutex_lock"></a>申请锁 - pthread_mutex_lock</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">int pthread_mutex_lock(pthread_mutex_t  *mutex);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>成功返回0，失败返回EOR。</p>
+</li>
+<li><p>mutex指向要初始化的互斥锁对象。</p>
+</li>
+<li><p>如果无法申请到锁，当前任务开始阻塞直到获得锁。</p>
+</li>
+</ol>
+<h4 id="释放锁-pthread-mutex-unlock"><a href="#释放锁-pthread-mutex-unlock" class="headerlink" title="释放锁 - pthread_mutex_unlock"></a>释放锁 - pthread_mutex_unlock</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">int pthread_mutex_unlock(pthread_mutex_t  *mutex);</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>成功返回0，失败返回EOR。</li>
+<li>mutex指向要初始化的互斥锁对象。</li>
+<li>执行完临界区要及时释放锁（若没有释放锁，会导致其他申请锁的任务一直被阻塞）。</li>
+</ol>
+<p>实例:线程互斥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;pthread.h&gt;</span><br><span class="line">#include &lt;semaphore.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt; </span><br><span class="line"></span><br><span class="line">unsigned int count,value1,value2;  //value1 , value2 相当于临界资源</span><br><span class="line">void *function(void *arg); //线程执行的函数</span><br><span class="line">pthread_t a_thread; //线程对象</span><br><span class="line"> </span><br><span class="line">if(pthread_mutex_lock(&amp;lock,NULL)!=0)  //初始化锁</span><br><span class="line">&#123;</span><br><span class="line">	 printf(&quot;fail to pthread_mutex_init\n&quot;);//打印错误信息</span><br><span class="line">	 exit(-1);</span><br><span class="line">&#125;</span><br><span class="line"> if(pthread_create(&amp;a_thread,NULL,function,NULL)!=0)</span><br><span class="line">&#123;</span><br><span class="line">	 printf(&quot;pthread_create&quot;);</span><br><span class="line">	 exit(-1); //创建失败退出</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//主线程</span><br><span class="line"> int main()</span><br><span class="line">&#123;</span><br><span class="line"> while(1)</span><br><span class="line">&#123;</span><br><span class="line">	 count++;</span><br><span class="line">#ifdef _LOCK_  //条件编译，根据条件决定是否编译</span><br><span class="line">	 ptread_mutex_lock(&amp;lock);</span><br><span class="line">#endif</span><br><span class="line">	 value1 = count;</span><br><span class="line">	 value2 = count;</span><br><span class="line">#ifdef _LOCK_</span><br><span class="line">	 pthread_mutex_unlock(&amp;lock);</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line"> return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//另外一个线程</span><br><span class="line">void *function(void *arg) </span><br><span class="line">&#123;</span><br><span class="line"> while(1)</span><br><span class="line">&#123;</span><br><span class="line">#ifdef _LOCK_  //条件编译，根据条件决定是否编译</span><br><span class="line">	 ptread_mutex_lock(&amp;lock);</span><br><span class="line">#endif</span><br><span class="line">	 if(value1 != vaue2)</span><br><span class="line">	&#123;</span><br><span class="line">		 printf(&quot;value = %u,value2 = %u\n&quot;,value1,value2);</span><br><span class="line">		 usleep(10000);</span><br><span class="line">	&#125;</span><br><span class="line">#ifdef _LOCK_</span><br><span class="line">	 pthread_mutex_unlock(&amp;lock);</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line">    return  NULL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译的两种情况：</p>
+<ol>
+<li>不使用互斥锁：<code>gcc -o test test.c -lphread</code></li>
+<li>使用互斥锁: <code>gcc -o test tet.c -lphread -D_LOCK_   //-D的作用是传递一个宏定义，相当于在程序中使用#define</code><br>结果分析：</li>
+<li>不加锁的情况：主线程执行count++，后将值赋给value1和value2,此时恰巧主线程的时间片使用完毕，另外一个线程开始运行，此时不会出现异常，但是当count++完成后，未来得及赋值的时候，时间片结束，另外一个线程就会打印出来两个数的值，相当于访问临界资源错误。</li>
+<li>加锁的情况：主线程在执行count++时加锁，此时value1和value2的值就不会出现未赋值的情况，因为此时另一个线程申请不到锁所以不会比较两个变量的值。结束的时候进行解锁操作。执行另外一个线程的时候首先就加锁，这样才不会造成临界资源访问异常。最后解锁。</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linxu/" rel="tag"># Linxu</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/04/进程/" rel="next" title="进程">
+                <i class="fa fa-chevron-left"></i> 进程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/images/header.jpg" alt="Zurdo">
+          <p class="site-author-name" itemprop="name">Zurdo</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">1.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的资源"><span class="nav-number">1.1.</span> <span class="nav-text">线程的资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程库"><span class="nav-number">2.</span> <span class="nav-text">线程库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的创建-pthread-create"><span class="nav-number">2.1.</span> <span class="nav-text">线程的创建 - pthread_create</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#线程的回收-pthread-join"><span class="nav-number">2.1.1.</span> <span class="nav-text">线程的回收 - pthread_join</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线程的结束-pthread-exit"><span class="nav-number">2.2.</span> <span class="nav-text">线程的结束 -pthread_exit</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步"><span class="nav-number">3.</span> <span class="nav-text">同步</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量"><span class="nav-number">3.1.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Posix-信号量（Linux遵循Posix规范）"><span class="nav-number">3.2.</span> <span class="nav-text">Posix 信号量（Linux遵循Posix规范）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#P-V操作"><span class="nav-number">3.3.</span> <span class="nav-text">P/V操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号量操作函数"><span class="nav-number">4.</span> <span class="nav-text">信号量操作函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量初始化-sem-init"><span class="nav-number">4.1.</span> <span class="nav-text">信号量初始化 - sem_init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#信号量初始化-p-v操作"><span class="nav-number">4.2.</span> <span class="nav-text">信号量初始化 -  p/v操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生产者消费者问题"><span class="nav-number">4.3.</span> <span class="nav-text">生产者消费者问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互斥"><span class="nav-number">5.</span> <span class="nav-text">互斥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互斥机制-mutex互斥锁"><span class="nav-number">6.</span> <span class="nav-text">互斥机制-mutex互斥锁</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#互斥锁的初始化-pthtread-mutex-init"><span class="nav-number">6.1.</span> <span class="nav-text">互斥锁的初始化 - pthtread_mutex_init</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#申请锁-pthread-mutex-lock"><span class="nav-number">6.2.</span> <span class="nav-text">申请锁 - pthread_mutex_lock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#释放锁-pthread-mutex-unlock"><span class="nav-number">6.3.</span> <span class="nav-text">释放锁 - pthread_mutex_unlock</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zurdo</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
+<!-- ҳ����С���� -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
