@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="数据结构,">
+  <meta name="keywords" content="QT,">
 
 
 
@@ -87,22 +87,18 @@
 
 
 
-<meta name="description" content="排序算法从稳定性上可以分为稳定排序和非稳定排序。">
-<meta name="keywords" content="数据结构">
+<meta name="description" content="信号槽">
+<meta name="keywords" content="QT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基本的排序算法">
-<meta property="og:url" content="http://yoursite.com/2019/05/29/基本的排序算法/index.html">
+<meta property="og:title" content="信号槽">
+<meta property="og:url" content="http://yoursite.com/2019/09/17/信号槽/index.html">
 <meta property="og:site_name" content="Zurdo">
-<meta property="og:description" content="排序算法从稳定性上可以分为稳定排序和非稳定排序。">
+<meta property="og:description" content="信号槽">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%872.png">
-<meta property="og:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%871.png">
-<meta property="og:updated_time" content="2019-06-02T02:34:03.274Z">
+<meta property="og:updated_time" content="2019-09-17T01:57:14.552Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基本的排序算法">
-<meta name="twitter:description" content="排序算法从稳定性上可以分为稳定排序和非稳定排序。">
-<meta name="twitter:image" content="http://yoursite.com/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png">
+<meta name="twitter:title" content="信号槽">
+<meta name="twitter:description" content="信号槽">
 
 
 
@@ -130,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/29/基本的排序算法/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/17/信号槽/">
 
 
 
 
 
-  <title> 基本的排序算法 | Zurdo </title>
+  <title> 信号槽 | Zurdo </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CH">
@@ -287,7 +283,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/29/基本的排序算法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/17/信号槽/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zurdo">
@@ -308,7 +304,7 @@
             
             
               
-                基本的排序算法
+                信号槽
               
             
           </h1>
@@ -323,8 +319,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-29T19:45:22+08:00">
-                2019-05-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-17T09:52:30+08:00">
+                2019-09-17
               </time>
             
 
@@ -359,57 +355,21 @@
       
 
       
-        <hr>
-<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><p>从稳定性上可以分为稳定排序和非稳定排序。</p>
-<a id="more"></a>
+        <h3 id="信号槽"><a href="#信号槽" class="headerlink" title="信号槽"></a>信号槽</h3><a id="more"></a>
+<p>信号是以广播形式进行传播，存在需要被处理的信号时，槽函数进行绑定接收。<br>利用connect关键字进行连接<br>connect（信号发生的对象，发生的信号（又称发生的动作事件），信号接收者，信号处理（槽函数））<br>eg：点击一个按钮，然后关闭该窗口<br>Connect(btu,&amp;QPushButton::click,this,&amp;widget::close)<br>自定义槽和信号的时候，需要在Signal和Slot后添加相应的函数，但是信号可以只声名而不进行实现，槽函数必须在同名 .cpp文件中实现。<br>对于槽函数的重载问题<br>槽函数的参数个数不同，在连接的时候会出现参数无法识别的问题，因为本质上连接的函数的地址，所以使用函数的指针来进行指向函数的位置。<br>函数指针的写法为： void (作用域， *指针名)（参数类型） = 函数取地址<br>以上述为例则函数指针为 void (QPushButton::  *pointer) (void) = &amp;QPushButton::click</p>
+<ol>
+<li>一个信号可以连接多个槽函数</li>
+<li>信号可以连接信号，并且信号可以断开和槽函数的连接（disconnect）</li>
+<li>多个信号可以连接同一个槽函数</li>
+<li>信号和槽函数的参数必须是对应的，（信号的参数可以多余，但是槽函数的参数不能多余，同时每一个位置的信号参数和槽参数都必须一致）</li>
+</ol>
+<h3 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h3><p>一般格式<br><code>[](){}()；</code><br>[]是lambda表达式开始的标识符<br>其中<a href></a>{}是一个函数，最后再加一个()是函数调用，才能正常使用<br>[]中存在参数 （空，=，&amp;，a）<br>其中 空 是指所在的范围没有任何函数对象参数<br>= 是表示可以使用lambda中的所有可见局部变量包括本身的this，不过该参数是值传递的形式（最常用的）<br>&amp; 和=类似，不过是引用传递的形式,有一点不同的地方是引用默认内部变量不可修改，如果修改了内容程序就会停住运行<br>A 是指对某个变量单独引用，在lambda函数体内只能使用者一个参数，也是值传递形式<br>修改值传递的方式需要用mutable关键字进行修饰<br><code>[=]()mutable{m = 10+10;qDebug()&lt;&lt;m;}</code><br>存在返回值的时候<br><code>[]()-&gt;返回值的类型{}</code><br>eg：存在int类型的返回值数据<br><code>Int rec = []()-&gt;int{return 10;}();</code></p>
+<h3 id="QMainWindow"><a href="#QMainWindow" class="headerlink" title="QMainWindow"></a>QMainWindow</h3><p>包含一个菜单栏（menu bar），多个工具栏（toolBar）<br>menuBar（）返回的是一个QMenuBar *bar的对象<br>将bar放入到窗体中使用this-&gt;setMenuBar（bar）<br>文件栏是addMenu（”文件”），<br>添加到菜单条是 <code>Qmenu *fileMenu = bar-&gt;addMenu(&quot;文件&quot;)；</code></p>
+<p>工具栏是QToolBar，需要添加在本窗口内，所以指定器父类为this<br>默认状态下工具栏可以进行拖动，设置不可拖动是setFloatable（bool ）<br><code>addToolBar(默认停靠位置，toolbar)</code><br>工具栏可以添加菜单项和自定义的工具</p>
+<p>状态栏 Qstatus 只能有一个<br><code>Qstatus * status= StatusBar（）；</code><br>状态栏创建成功后需要添加到当前的显示界面中及即setStatusBar（status）；<br>但是默认的状态栏没有显示信息即需要手动添加控件来显示相对应的信息，<br><code>Qlabel *label = new Qlabel();</code>默认显示在窗口的左侧，但是需要添加到对应的状态栏中<br>即<code>status-&gt;addWidget(label);</code></p>
+<p>铆接部件（浮动窗口）围绕着核心部件QTextEdit<br><code>QDockWidget *dock = new QDockWidget（）；</code><br>默认是在上层窗口，需要手动更改显示区域 addDockWidget(显示区域，dock);</p>
+<p>核心部件只能有一个<br><code>QTextEdit *edit = new QTextEdit;</code><br><code>setCentralWidget(edit);</code></p>
 
-<ol>
-<li>稳定排序</li>
-</ol>
-<p>稳定排序是指将原数据按照一定的排序策略更改顺序后，其中相同的元素值的顺序并没有改变。<br>例如:8,2,9,4①,4②,5,6,7    递增排序后：2,4①,4②,5,6,7,8,9<br>此时相同值的4的顺序并没有改变。</p>
-<ol start="2">
-<li>非稳定排序</li>
-</ol>
-<p>非稳定排序与稳定排序相反，相同的值的顺序在排序之后混乱。<br>例如:8,2,9,4①,4②,5,6,7    递增排序后：2,4②,4①,5,6,7,8,9</p>
-<p>从数据存储位置可以分为内排序和外排序</p>
-<ol>
-<li>内排序是指数据本身在内存中存储，同时排序也在内存中进行。但是内存容量较少，所以排序的长度会有所限制。</li>
-<li>外排序是指数据存储在外存中，排序过程数据需要在内存和外存中频繁交换。</li>
-</ol>
-<p>算法主要分为五类：</p>
-<ol>
-<li>插入排序</li>
-<li>交换排序</li>
-<li>选择排序</li>
-<li>归并排序</li>
-<li>基准排序</li>
-</ol>
-<p>① 直接插入排序<br>例如：存在一个集合Key允许相同的键值存在，K={50，36，66，76，95，12，25，36}<br>首先将K分为两部分，有序部分和无序部分。</p>
-<p><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%870.png" alt="图片"></p>
-<p>定义i为指向无序部分第一个元素的下标，j为指向有序部分最后一个元素的下标，临时变量temp。将i中的值保存在temp中，比较temp和j的元素，如果temp的值小于j中的数值，将j前移一位，再此比较元素值。如果j=-1，结束，将temp的数值插入到j的下标的后一个位置。如果temp的数值大于j的值，不移动。进行下一次比较。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void seqsort(int *a)</span><br><span class="line">&#123;</span><br><span class="line">	int i,j,temp;</span><br><span class="line">	for(i = 1;i &lt; N;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		temp = a[i];</span><br><span class="line"> 		for(j = i-1;j&gt;=0;j--)</span><br><span class="line">		&#123;</span><br><span class="line">			if(temp&lt;a[j])</span><br><span class="line">				a[j+1] = a[j];</span><br><span class="line">			else</span><br><span class="line">				break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>② 希尔排序（缩小增量配置排序）是一种在直接插入排序基础上的改进。<br>操作步骤：</p>
-<ol>
-<li>将待排序的原纪录进行分组。分组的标准是增量（d）。</li>
-<li>再对每一组进行交替直接插入排序。</li>
-<li>逐渐减少增量。增量的初值为记录个数/2<br><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%872.png" alt="图片"><br>具体分析实现：<br>待排序长度为10，所以D初值为5（距离第一个记录间隔为5的称为一组）可以分为5组<br>50和12是一组，在直接插入排序后变为12，50.<br>……<br>待五组比较完成后序列变为12,25,36,24,8,50,36,66,76,95，开始缩小增量d=d/2=2，只能分为两组同一组元素相差两个位置<br><img src="/2019/05/29/基本的排序算法/%E5%9B%BE%E7%89%871.png" alt="图片"><br>排序后序列为：8,24,12,25,36,50,36,66,76,95再缩小增量d= d/2=1<br>只能分为1组可以直接进行直接插入排序<br>8,12,24,25,36,36,50,66,76,95</li>
-</ol>
-<p>③ 冒泡排序<br>冒泡排序将小元素依次排向数组起始地址上，元素由小到大排列。<br>冒泡排序可以分为三个实现步骤：</p>
-<ol>
-<li>从第一个元素开始，将相邻的两个元素进行比较，直到最后两个元素完成比较。如果前一个元素大于后一个元素，就交换他们的位置，第一次循环结束后，数组末尾就是最大的元素。</li>
-<li>除去最后一个元素不比较，比较其他的元素。如果第一个元素大于第二个元素就交换他们的位置。类似与第一步。</li>
-<li>以此类推将数组中比较的文件依次递减，直到最后没有元素可以比较，结束。</li>
-</ol>
-<p>实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void bubblesort(int *array)//冒泡排序</span><br><span class="line">&#123;</span><br><span class="line">	int temp;</span><br><span class="line">	int i,j;</span><br><span class="line"> 	for(i = 0; i&lt;arrary.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for(j = 1; j&lt;arrary-i-1; j++)//每次减少比较一个元素（第一次结束后，最后一个元素不再比较，第二次结束后，最后两个元素不再比较......）</span><br><span class="line">		if(arrary[j]&gt;arrary[j+1])//前一个元素大，交换位置</span><br><span class="line"> 		&#123;</span><br><span class="line">			temp = arrary[j];</span><br><span class="line">			arrary[j] = arrary[j+1];</span><br><span class="line">			arrary[j+1] = temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>④ 快速排序<br>定义：经过key的一趟排序后，确定某个记录在排序后的最终位置。（某个记录叫做基准），基准会将一组数据分为小于基准和大于基准的两部分。<br>基准的确定：一般选择记录的第一个元素作为基准。<br>例如：35，42，68，13，21，53   进行排序</p>
-<p>首先将基准放入最终位置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int onequicksort(int *a,int I,intj)</span><br><span class="line">&#123;</span><br><span class="line">temp = a[0];//第一个元素作为基准</span><br><span class="line">while(i&lt;j)   / /i是起始的下标，j是末尾的下标</span><br><span class="line">&#123;</span><br><span class="line">	//大的数字在后</span><br><span class="line">	//先比较下界元素，再比较上界元素</span><br><span class="line">	while(i&lt;j &amp;&amp; a[j]&gt;=temp)//两个角标没有相等并且下界的元素比基准要大</span><br><span class="line">		j--；//再比较下界的前一个元素</span><br><span class="line">	if(i&lt;j)  //此时a[j]&lt;temp需要将i的下标的元素写入到j的位置</span><br><span class="line">	        a[j]=a[i];</span><br><span class="line">	//一次的下界比较完成，开始比较下界</span><br><span class="line">	While(i&lt;j &amp;&amp; temp&gt;=a[i])</span><br><span class="line">		i++;</span><br><span class="line">	if(i&lt;j)</span><br><span class="line">		 a[i] = a[j];</span><br><span class="line">		</span><br><span class="line">		//下界元素一次比较完成后再次比较下界直到i&gt;=j为止</span><br><span class="line">&#125;</span><br><span class="line">	a[i] = temp;//或者a[j] = temp  因为最终 i = j</span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>基准位置确定后就需要将其他元素按照分组，再此进行快速排序。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Void quicksort(int *a,int low,int high)</span><br><span class="line">&#123;</span><br><span class="line">	int mid;//存放基准的下标</span><br><span class="line">	while(low&lt;high)</span><br><span class="line">	&#123;</span><br><span class="line">		mid = onequicksort(a,0,N-1);//得到基准的下标</span><br><span class="line">		//基准的左半部分开始排序</span><br><span class="line">		quicksort(a,low,mid-1);</span><br><span class="line">		//基准的右半部分开始排序</span><br><span class="line">		quicksort(a,mid+1,high);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -438,7 +398,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+            <a href="/tags/QT/" rel="tag"># QT</a>
           
         </div>
       
@@ -451,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/29/两种简单的查找算法/" rel="next" title="两种简单的查找算法">
-                <i class="fa fa-chevron-left"></i> 两种简单的查找算法
+              <a href="/2019/06/19/线程/" rel="next" title="线程">
+                <i class="fa fa-chevron-left"></i> 线程
               </a>
             
           </div>
@@ -461,8 +421,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/02/java面向对象/" rel="prev" title="java面向对象">
-                java面向对象 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/09/17/QT聊天程序/" rel="prev" title="QT聊天程序">
+                QT聊天程序 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -581,7 +541,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#排序算法"><span class="nav-number">1.</span> <span class="nav-text">排序算法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号槽"><span class="nav-number">1.</span> <span class="nav-text">信号槽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambda表达式"><span class="nav-number">2.</span> <span class="nav-text">Lambda表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QMainWindow"><span class="nav-number">3.</span> <span class="nav-text">QMainWindow</span></a></li></ol></div>
             
 
           </div>
