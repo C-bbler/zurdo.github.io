@@ -87,22 +87,22 @@
 
 
 
-<meta name="description" content="利用QT实现简单的聊天功能。因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。源程序如下： 123456789101112131415161718192021222324252627dialoglist.h#ifndef DIALOGLIST_H#define DIALOGLIST_H#include &amp;lt;QWidget&amp;gt;names">
+<meta name="description" content="利用QT实现简单的聊天功能。因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。源程序如下： 123456789101112131415161718192021222324252627dialoglist.h#ifndef DIALOGLIST_H#define DIALOGLIST_H#include &amp;lt;QWidget&amp;gt;name">
 <meta name="keywords" content="QT">
 <meta property="og:type" content="article">
 <meta property="og:title" content="QT聊天程序">
 <meta property="og:url" content="http://yoursite.com/2019/09/17/QT聊天程序/index.html">
 <meta property="og:site_name" content="Zurdo">
-<meta property="og:description" content="利用QT实现简单的聊天功能。因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。源程序如下： 123456789101112131415161718192021222324252627dialoglist.h#ifndef DIALOGLIST_H#define DIALOGLIST_H#include &amp;lt;QWidget&amp;gt;names">
+<meta property="og:description" content="利用QT实现简单的聊天功能。因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。源程序如下： 123456789101112131415161718192021222324252627dialoglist.h#ifndef DIALOGLIST_H#define DIALOGLIST_H#include &amp;lt;QWidget&amp;gt;name">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="http://yoursite.com/2019/09/17/QT聊天程序/TIM%E5%9B%BE%E7%89%8701.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/17/QT聊天程序/TIM%E5%9B%BE%E7%89%8702.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/17/QT聊天程序/TIM%E5%9B%BE%E7%89%8703.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/17/QT聊天程序/TIM%E5%9B%BE%E7%89%8704.png">
-<meta property="og:updated_time" content="2019-09-17T02:15:12.695Z">
+<meta property="og:updated_time" content="2019-09-17T02:41:15.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QT聊天程序">
-<meta name="twitter:description" content="利用QT实现简单的聊天功能。因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。源程序如下： 123456789101112131415161718192021222324252627dialoglist.h#ifndef DIALOGLIST_H#define DIALOGLIST_H#include &amp;lt;QWidget&amp;gt;names">
+<meta name="twitter:description" content="利用QT实现简单的聊天功能。因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。源程序如下： 123456789101112131415161718192021222324252627dialoglist.h#ifndef DIALOGLIST_H#define DIALOGLIST_H#include &amp;lt;QWidget&amp;gt;name">
 <meta name="twitter:image" content="http://yoursite.com/2019/09/17/QT聊天程序/TIM%E5%9B%BE%E7%89%8701.png">
 
 
@@ -361,6 +361,7 @@
 
       
         <a id="more"></a>
+
 <p>利用QT实现简单的聊天功能。<br>因为程序使用到了udp通信，需要在.pro文件中增加network以便添加使用QUpdSocket文件。<br>源程序如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">dialoglist.h</span><br><span class="line">#ifndef DIALOGLIST_H</span><br><span class="line">#define DIALOGLIST_H</span><br><span class="line"></span><br><span class="line">#include &lt;QWidget&gt;</span><br><span class="line"></span><br><span class="line">namespace Ui &#123;</span><br><span class="line">class DialogList;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class DialogList : public QWidget</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    explicit DialogList(QWidget *parent = 0);</span><br><span class="line">    ~DialogList();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    //解决可以重复打开一个人的聊天窗口</span><br><span class="line">    QVector&lt;bool&gt; isShow; //默认为false</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    Ui::DialogList *ui;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">#endif // DIALOGLIST_H</span><br></pre></td></tr></table></figure>
 
