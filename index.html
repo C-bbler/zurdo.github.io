@@ -280,6 +280,142 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/17/UDP通信/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zurdo">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/header.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zurdo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/09/17/UDP通信/" itemprop="url">
+                  UDP通信
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-17T10:53:15+08:00">
+                2019-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>作为无连接通信的方式UDP,提供面向事物简单不可靠信息传送服务，UDP协议与TCP协议一样用于处理数据包，在OSI模型中，两者都位于传输层，处于IP协议的上一层。UDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，也就是说，当报文发送之后，是无法得知其是否安全完整到达的。<br>UDP通信不需要指定客户端和服务器端。</p>
+<h3 id="使用UDP步骤"><a href="#使用UDP步骤" class="headerlink" title="使用UDP步骤"></a>使用UDP步骤</h3><ol>
+<li>声名套接字（UDPsocket）</li>
+<li>创建套接字（new 对象）</li>
+<li>绑定端口号（通过bind命令）</li>
+<li>对于发送端来说进行“书写报文”（writeDatagram)</li>
+<li>对于接收端来说当检测到信号（Readyread)时，进行报文读取（readDatagram)</li>
+</ol>
+<h3 id="源程序"><a href="#源程序" class="headerlink" title="源程序"></a>源程序</h3><p>UDP1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;widget.h&quot;</span><br><span class="line">#include &quot;ui_widget.h&quot;</span><br><span class="line"></span><br><span class="line">Widget::Widget(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::Widget)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line"></span><br><span class="line">    //初始化三个lineEdit窗口</span><br><span class="line">    ui-&gt;myPort-&gt;setText(&quot;9999&quot;);</span><br><span class="line">    ui-&gt;toPort-&gt;setText(&quot;8888&quot;);</span><br><span class="line">    ui-&gt;toIp-&gt;setText(&quot;127.0.0.1&quot;);//只做本地通信，所以IP地址是本机</span><br><span class="line"></span><br><span class="line">    //创建套接字</span><br><span class="line">    udp = new QUdpSocket(this);</span><br><span class="line"></span><br><span class="line">    //通过套接字绑定端口号</span><br><span class="line">    udp-&gt;bind(ui-&gt;myPort-&gt;text().toInt());</span><br><span class="line"></span><br><span class="line">    //点击发送按钮，发送报文</span><br><span class="line">    connect(ui-&gt;sendBtn,&amp;QPushButton::clicked,[=]()&#123;</span><br><span class="line"></span><br><span class="line">        //书写报文</span><br><span class="line">        udp-&gt;writeDatagram(ui-&gt;input-&gt;toPlainText().toUtf8(),QHostAddress(ui-&gt;toIp-&gt;text()),ui-&gt;toPort-&gt;text().toInt());</span><br><span class="line"></span><br><span class="line">        //显示在聊天记录区域</span><br><span class="line">        ui-&gt;record-&gt;append(&quot;my say:&quot;+ui-&gt;input-&gt;toPlainText());</span><br><span class="line"></span><br><span class="line">        //清空发送区域</span><br><span class="line">        ui-&gt;input-&gt;clear();</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    //接收报文</span><br><span class="line">    connect(udp,&amp;QUdpSocket::readyRead,[=]()&#123;</span><br><span class="line"></span><br><span class="line">        //获取报文长度</span><br><span class="line">        qint64 size = udp-&gt;pendingDatagramSize();</span><br><span class="line">        QByteArray array = QByteArray(size,0);</span><br><span class="line">        udp-&gt;readDatagram(array.data(),size);</span><br><span class="line"></span><br><span class="line">        //显示到聊天界面</span><br><span class="line">        ui-&gt;record-&gt;append(&quot;you say:&quot;+array);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::~Widget()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>UDP2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;udp2.h&quot;</span><br><span class="line">#include &quot;ui_udp2.h&quot;</span><br><span class="line"></span><br><span class="line">udp2::udp2(QWidget *parent) :</span><br><span class="line">    QWidget(parent),</span><br><span class="line">    ui(new Ui::udp2)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;setupUi(this);</span><br><span class="line"></span><br><span class="line">    //复制第一个UDP的程序</span><br><span class="line">    //如下</span><br><span class="line">    ui-&gt; myPort-&gt; setText (&quot;8888&quot;);</span><br><span class="line">    ui-&gt; toPort-&gt; setText (&quot;9999&quot;);</span><br><span class="line">    ui-&gt; toIp-&gt; setText (&quot;127.0.0.1&quot;);</span><br><span class="line">    udp = new QUdpSocket (this);</span><br><span class="line">    udp-&gt;bind (ui-&gt;myPort-&gt;text(). toInt());</span><br><span class="line"></span><br><span class="line">    connect(ui-&gt;sendBtn,&amp;QPushButton::clicked,[=]()&#123;</span><br><span class="line">        //Write message</span><br><span class="line">        udp-&gt;writeDatagram(ui-&gt;input-&gt;toPlainText().toUtf8(), QHostAddress(ui-&gt;toIp-&gt;text()), ui-&gt;toPort-&gt;text().toInt());</span><br><span class="line">        //Displayed in the chat history area</span><br><span class="line">        ui-&gt;record-&gt;append(&quot; My say:&quot;+ui-&gt;input-&gt;toPlainText());</span><br><span class="line">        //Clear the send area</span><br><span class="line">        ui-&gt;input-&gt;clear();</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    connect(udp,&amp;QUdpSocket::readyRead,[= ]()&#123;</span><br><span class="line">        //Get the message length</span><br><span class="line">        qint64 size = udp-&gt;pendingDatagramSize();</span><br><span class="line">        QByteArray array = QByteArray(size,0);</span><br><span class="line">        udp-&gt;readDatagram(array.data(),size);</span><br><span class="line">        //Show to chat interface</span><br><span class="line">        ui-&gt;record-&gt;append(&quot;you say:&quot;+array);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">udp2::~udp2()</span><br><span class="line">&#123;</span><br><span class="line">    delete ui;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="实际效果"><a href="#实际效果" class="headerlink" title="实际效果"></a>实际效果</h3><p><img src="/2019/09/17/UDP通信/TIM%E5%9B%BE%E7%89%8701.png" alt="图片"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/17/QT聊天程序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1405,132 +1541,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/24/二叉树/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Zurdo">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/header.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Zurdo">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2019/05/24/二叉树/" itemprop="url">
-                  二叉树
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-24T17:46:15+08:00">
-                2019-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <hr>
-<p>树已经和之前的栈，队列的结构已经发生了改变，它是一种非线性结构。和图，集合属于同一类。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/05/24/二叉树/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1578,7 +1588,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
