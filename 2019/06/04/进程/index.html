@@ -98,7 +98,8 @@
 <meta property="og:image" content="http://yoursite.com/2019/06/04/进程/%E8%BF%9B%E7%A8%8B.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/04/进程/%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81.png">
 <meta property="og:image" content="http://yoursite.com/2019/06/04/进程/%E4%BD%9C%E4%B8%9A%E5%8F%B7.png">
-<meta property="og:updated_time" content="2019-06-04T12:47:56.494Z">
+<meta property="og:image" content="http://yoursite.com/2019/06/04/进程/pipe.png">
+<meta property="og:updated_time" content="2019-10-07T12:06:47.920Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程">
 <meta name="twitter:description" content="进程程序 存放在磁盘中的指令和数据的有序集合。 是静态的。">
@@ -544,6 +545,82 @@
 <p>实例：创建守护进程，每隔1S将系统时间写入到文件time.txt</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;time.h&gt; //time(),ctime()</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	 pid_d pid;</span><br><span class="line">	 int  i;</span><br><span class="line">	 FILE *fp;</span><br><span class="line">	 time_t t;</span><br><span class="line">	</span><br><span class="line">	//①创建子进程，父进程退出</span><br><span class="line">	  if(pid = fork()&lt;0)</span><br><span class="line">	 &#123;</span><br><span class="line">		 perror(&quot;fork&quot;);</span><br><span class="line">		 exit(-1);  //程序因为创建子进程失败而退出</span><br><span class="line">	 &#125;</span><br><span class="line">	  else if(pid&gt;0)</span><br><span class="line">	&#123;</span><br><span class="line">	          exit(0);</span><br><span class="line">	&#125;</span><br><span class="line">	//②创建新的会话</span><br><span class="line">	 setsid();</span><br><span class="line">	//③修改文件掩码</span><br><span class="line">	 umask(0);</span><br><span class="line">	//④修改当前工作目录</span><br><span class="line">	 chdir(&quot;/tmp&quot;);//在用户权限下</span><br><span class="line">	//⑤关闭从父进程继承的文件</span><br><span class="line">	for(i = 0; i &lt; getdtablesize();i++) // getdtablesize()是进程能打开的最大文件个数</span><br><span class="line">	       &#123;</span><br><span class="line">	 	 close (i);</span><br><span class="line">	        &#125;</span><br><span class="line">	//⑥打开文件写入</span><br><span class="line">	 if((fp = fopen(&quot;text.log&quot;,&quot;a+&quot;))==NULL)</span><br><span class="line">	&#123;</span><br><span class="line">	         perror(&quot;fopen&quot;);</span><br><span class="line">	         exit(-1);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	 while(1)</span><br><span class="line">	&#123;</span><br><span class="line">		 time(&amp;t);</span><br><span class="line">		 fprintf(fp,&quot;%s&quot;,ctime(&amp;t));</span><br><span class="line">		 fflush(fp);</span><br><span class="line">		 sleep(1);//一秒的时间间隔</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	 return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="进程间通信"><a href="#进程间通信" class="headerlink" title="进程间通信"></a>进程间通信</h3><p>IPC：进程间通信，通过内核的缓冲区进行数据交换的机制</p>
+<h4 id="ipc通信的方式"><a href="#ipc通信的方式" class="headerlink" title="ipc通信的方式"></a>ipc通信的方式</h4><pre><code>1. Pipe（管道，无名管道，仅支持存在血缘关系通信）
+2. fifo（有名管道）
+3. Mmap （文件映射共享---速度最快）
+4. socket（本地，不是网络socket-----最稳定的形式）
+5. 信号signal （携带信息最小的）
+6. 共享内存
+7. 消息队列</code></pre><h5 id="无名管道（半双工通信）"><a href="#无名管道（半双工通信）" class="headerlink" title="无名管道（半双工通信）"></a>无名管道（半双工通信）</h5><p>不同的进程之间又独自的资源，不可共享，但是父子进程之间可以共享资源。<br>这也就是为什么要先创建管道再创建子进程的原因。（两者可以互相发数据）</p>
+<p>父进程使用w端时，子进程使用r端，同理相反。<br> pipfd[0]代表读端，pipefd[1]代表写端<br>（一定要断绝一个进程连接在管道的两端。每个进程间都应该保持唯一和管道的联系close（fd[0]））<br>管道在读取设备时，默认read是阻塞状态，read一直等待，并且直到write写入数据。</p>
+<p>读管道：<br>    ○ 写端全部关闭—–read读到0，相当于读取到文件末尾<br>    ○ 写端没有关闭<br>        ○ 有数据—read正常读取数据<br>        ○ 没有数据—read阻塞 ，fcntl函数可以更改阻塞状态</p>
+<p>写管道<br>    ○ 读端全部关闭—-产生一个信号，管道崩溃，程序异常终止<br>    ○ 读端未全部关闭<br>        ○ 管道已满（管道的本质就是一个缓冲区）—-写阻塞<br>        ○ 管道未满—-写端正常<br><img src="/2019/06/04/进程/pipe.png" alt="图片"><br>计算管道的大小size  ？kb*8<br><code>long fpathconf(int fd,int name)</code><br><code>ulimit -a</code></p>
+<p>管道的优劣<br>只有一个函数（pipe）所以简单<br>但是只能用于有血缘关系的进程进行通信，父子进程之间相互通信时，需要创建两个管道（保证安全性所以管道都是单方向通信）</p>
+<p>FIFO–有名管道—-实现无血缘关系进行通信<br>    • 本质是实现了一个管道的伪文件<br>    • Mkfifo name 创建伪文件命令</p>
+<p>创建FIFO的函数<br><code>int mkfifo(const char *pathname, mode_t mode);</code></p>
+<pre><code>    • 文件路径，权限位（0666）
+//利用有名管道实现一个进程写入文件，另一个进程读取文件的操作
+ #include &lt;unistd.h&gt;
+ #include &lt;stdio.h&gt;
+ #include &lt;sys/types.h&gt;
+ #include&lt;sys/stat.h&gt;
+ #inlcude &lt;string.h&gt;
+//写入端
+//前提是已经存在文件 ，不存在的话需要在mode中加入O_CREATE
+ int main(int argc,char *argv[])
+{
+     if(argc != 2)//运行时没有指定文件
+    { 
+        printf(&quot;error\n&quot;);
+         return -1;
+    }
+
+     int fd = open(argv[1],O_WDONLY);
+     char buf[1024];
+
+     int num = 0;
+     while(1)
+    {
+         memset(buf,0,sizeof(buf));//设置默认数据，清空
+         sprintf(buf,&quot;test  %03d&quot;,num++);//将测试数据写入缓冲区
+         write(fd,buf,strlen(buf));//缓冲区数据写入文件中
+
+         sleep(2);//休眠2S执行一次
+    }
+     close(fd);
+     return 0;
+}
+
+//读取端，头文件同上，省略
+//写入端
+//前提是已经存在文件 ，不存在的话需要在mode中加入O_CREATE
+ int main(int argc,char *argv[])
+{
+     if(argc != 2)//运行时没有指定读取文件
+    { 
+        printf(&quot;error\n&quot;);
+         return -1;
+    }
+
+     int fd = open(argv[1],O_RDONLY);
+     char buf[1024];
+
+     int temp;
+     while(1)
+    {
+         temp = read(fd,buf,sizeof(buf));
+         if(temp &gt;0)//文件中存在数据
+        {
+             printf(&quot;read data:%s\n&quot;,buf);
+        }
+    }
+     close(fd);
+     return 0;
+}
+
+</code></pre><hr>
 
       
     </div>
@@ -716,7 +793,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#程序"><span class="nav-number">1.1.</span> <span class="nav-text">程序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的类型"><span class="nav-number">1.2.</span> <span class="nav-text">进程的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的状态"><span class="nav-number">1.3.</span> <span class="nav-text">进程的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux中查看进程信息"><span class="nav-number">1.4.</span> <span class="nav-text">Linux中查看进程信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的相关命令"><span class="nav-number">1.5.</span> <span class="nav-text">进程的相关命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的相关函数"><span class="nav-number">2.</span> <span class="nav-text">进程的相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#父子进程"><span class="nav-number">2.1.</span> <span class="nav-text">父子进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的返回值和结束方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程的返回值和结束方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程创建-fork"><span class="nav-number">2.3.</span> <span class="nav-text">进程创建 - fork</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程结束-exit-exit"><span class="nav-number">2.4.</span> <span class="nav-text">进程结束 - exit/_exit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程-exec函数族"><span class="nav-number">2.5.</span> <span class="nav-text">进程 - exec函数族</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程回收-wait"><span class="nav-number">2.6.</span> <span class="nav-text">进程回收 - wait</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程回收-waitpid-指定进程回收"><span class="nav-number">2.7.</span> <span class="nav-text">进程回收 - waitpid (指定进程回收)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#守护进程"><span class="nav-number">3.</span> <span class="nav-text">守护进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#守护进程的创建"><span class="nav-number">3.1.</span> <span class="nav-text">守护进程的创建</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">1.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#程序"><span class="nav-number">1.1.</span> <span class="nav-text">程序</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的类型"><span class="nav-number">1.2.</span> <span class="nav-text">进程的类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的状态"><span class="nav-number">1.3.</span> <span class="nav-text">进程的状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux中查看进程信息"><span class="nav-number">1.4.</span> <span class="nav-text">Linux中查看进程信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的相关命令"><span class="nav-number">1.5.</span> <span class="nav-text">进程的相关命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的相关函数"><span class="nav-number">2.</span> <span class="nav-text">进程的相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#父子进程"><span class="nav-number">2.1.</span> <span class="nav-text">父子进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程的返回值和结束方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程的返回值和结束方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程创建-fork"><span class="nav-number">2.3.</span> <span class="nav-text">进程创建 - fork</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程结束-exit-exit"><span class="nav-number">2.4.</span> <span class="nav-text">进程结束 - exit/_exit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程-exec函数族"><span class="nav-number">2.5.</span> <span class="nav-text">进程 - exec函数族</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程回收-wait"><span class="nav-number">2.6.</span> <span class="nav-text">进程回收 - wait</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程回收-waitpid-指定进程回收"><span class="nav-number">2.7.</span> <span class="nav-text">进程回收 - waitpid (指定进程回收)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#守护进程"><span class="nav-number">3.</span> <span class="nav-text">守护进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#守护进程的创建"><span class="nav-number">3.1.</span> <span class="nav-text">守护进程的创建</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程间通信"><span class="nav-number">4.</span> <span class="nav-text">进程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ipc通信的方式"><span class="nav-number">4.1.</span> <span class="nav-text">ipc通信的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#无名管道（半双工通信）"><span class="nav-number">4.1.1.</span> <span class="nav-text">无名管道（半双工通信）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
